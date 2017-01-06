@@ -34,3 +34,5 @@ ecalloc(size_t nmemb, size_t size)
 		die("calloc:");
 	return p;
 }
+
+/* vim: set noexpandtab: */
