@@ -1736,6 +1736,7 @@ tag(const Arg *arg)
 	if (selmon->sel && arg->ui & TAGMASK) {
 		selmon->sel->tags = arg->ui & TAGMASK;
 		view(arg);
+		warp(nexttiled(selmon->clients));
 	}
 }
 
