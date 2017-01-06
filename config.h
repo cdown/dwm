@@ -22,6 +22,9 @@ static const char *colors[][3]      = {
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6" };
+ 
+static const char pp_moni[]  = "pdfpc - presenter";
+static const char pp_proj[]  = "pdfpc - presentation";
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -29,8 +32,15 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Gimp",     NULL,       NULL,       0,            True,        -1 },
+	{ NULL,       NULL,       "mail",     1 << 3,       False,       -1 },
+	{ NULL,       NULL,       "irc",      1 << 2,       False,       -1 },
+	{ NULL,       NULL,       "Terminal", 1,            False,       -1 },
+	{ "Firefox",  NULL,       NULL,       1 << 1,       False,       -1 },
+	{ NULL, "Tor Browser",    NULL,       1 << 1,       False,       -1 },
+	{ "Spotify",  NULL,       NULL,       1 << 5,       False,       -1 },
+	{ NULL,       NULL,       pp_moni,    0,            False,       2  },
+	{ NULL,       NULL,       pp_proj,    0,            False,       1  },
 };
 
 /* layout(s) */
