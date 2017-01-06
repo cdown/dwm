@@ -33,6 +33,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     iscentered  isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            False,      True,        -1 },
+	{ NULL,       NULL,       "Scratch",  0,            True,       True,        -1 },
 	{ NULL,       NULL,       "mail",     1 << 3,       False,      False,       -1 },
 	{ NULL,       NULL,       "irc",      1 << 2,       False,      False,       -1 },
 	{ NULL,       NULL,       "Terminal", 1,            False,      False,       -1 },
@@ -93,6 +94,7 @@ static Key keys[] = {
 	{ MODKEY,             XK_2,            spawn,          {.v = passmenu } },
 	{ MODKEY,             XK_3,            spawn,          {.v = clipmenu } },
 	{ MODKEY,             XK_Return,       spawn,          SHCMD("urxvtc -title Terminal") },
+	{ MODKEY|ShiftMask,   XK_Return,       spawn,          SHCMD("urxvtc -title Scratch -geometry 160x40") },
 	{ MODKEY|ControlMask, XK_b,            setlayout,      {.v = &layouts[1] } },
 	{ MODKEY|ControlMask, XK_t,            setlayout,      {.v = &layouts[0] } },
 	{ MODKEY|ControlMask, XK_g,            setlayout,      {.v = &layouts[4] } },
