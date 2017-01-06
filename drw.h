@@ -55,3 +55,5 @@ int drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned in
 
 /* Map functions */
 void drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h);
+
+/* vim: set noexpandtab: */
