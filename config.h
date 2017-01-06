@@ -87,6 +87,7 @@ static Key keys[] = {
   TK(                     XK_l,            4               )
   TK(                     XK_semicolon,    5               )
   RK( MODKEY,             XK_comma,        focusstack      )
+  RK( MODKEY|ControlMask, XK_comma,        pushstack       )
   RK( MODKEY,             XK_period,       focusmon        )
   RK( MODKEY|ControlMask, XK_period,       tagmon          )
 
