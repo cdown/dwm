@@ -33,3 +33,5 @@ die(const char *fmt, ...) {
 
 	exit(1);
 }
+
+/* vim: set noexpandtab: */
