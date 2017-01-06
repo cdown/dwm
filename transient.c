@@ -40,3 +40,5 @@ int main(void) {
 	XCloseDisplay(d);
 	exit(0);
 }
+
+/* vim: set noexpandtab: */
