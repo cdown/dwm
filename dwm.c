@@ -192,6 +192,7 @@ static void pop(Client *c);
 static Client *prevtiled(Client *c);
 static void propertynotify(XEvent *e);
 static void pushdown(const Arg *arg);
+static void pushstack(const Arg *arg);
 static void pushup(const Arg *arg);
 static void quit(const Arg *arg);
 static Monitor *recttomon(int x, int y, int w, int h);
@@ -1313,6 +1314,14 @@ pushdown(const Arg *arg) {
 	}
 	focus(sel);
 	arrange(selmon);
+}
+
+void
+pushstack(const Arg *arg) {
+    if(arg->i > 0)
+        pushdown(arg);
+    else
+        pushup(arg);
 }
 
 void
