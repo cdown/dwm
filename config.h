@@ -72,7 +72,6 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-i", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "urxvtc", NULL };
 
 static const char *mpdmenu_library[]  = { "mpdmenu", "-l", "::", "-i", "-l", "3", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *mpdmenu_playlist[] = { "mpdmenu", "-p", "::", "-i", "-l", "3", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
@@ -94,7 +93,6 @@ static Key keys[] = {
 	{ MODKEY,             XK_2,            spawn,          {.v = passmenu } },
 	{ MODKEY,             XK_3,            spawn,          {.v = clipmenu } },
 	{ MODKEY,             XK_Return,       spawn,          SHCMD("urxvtc -title Terminal") },
-	{ MODKEY|ShiftMask,   XK_Return,       spawn,          SHCMD("urxvtc -title Scratch -geometry 160x40") },
 	{ MODKEY|ControlMask, XK_b,            setlayout,      {.v = &layouts[1] } },
 	{ MODKEY|ControlMask, XK_t,            setlayout,      {.v = &layouts[0] } },
 	{ MODKEY|ControlMask, XK_g,            setlayout,      {.v = &layouts[4] } },
@@ -133,7 +131,6 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
