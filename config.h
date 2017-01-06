@@ -46,12 +46,15 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
-#define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+#define MODKEY Mod4Mask
+#define TK(KEY,TAG) \
+	{ MODKEY,                         KEY,  view,        {.ui = 1 << TAG} }, \
+	{ MODKEY|ShiftMask,               KEY,  toggleview,  {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,             KEY,  tag,         {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask|ShiftMask,   KEY,  toggletag,   {.ui = 1 << TAG} },
+#define RK(MASK,KEY,ACTION) \
+	{ MASK,                           KEY,  ACTION,      {.i  = +1 } }, \
+	{ MASK|ShiftMask,                 KEY,  ACTION,      {.i  = -1 } },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -61,38 +64,56 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-i", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "urxvtc", NULL };
 
+static const char *mpdmenu_library[]  = { "mpdmenu", "-l", "::", "-i", "-l", "3", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *mpdmenu_playlist[] = { "mpdmenu", "-p", "::", "-i", "-l", "3", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *clipmenu[]         = { "clipmenu", "-i", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *passmenu[]         = { "passmenu", "-i", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+
 static Key keys[] = {
-	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+  TK(                     XK_i,            0               )
+  TK(                     XK_o,            1               )
+  TK(                     XK_p,            2               )
+  TK(                     XK_k,            3               )
+  TK(                     XK_l,            4               )
+  TK(                     XK_semicolon,    5               )
+  RK( MODKEY,             XK_comma,        focusstack      )
+  RK( MODKEY,             XK_period,       focusmon        )
+  RK( MODKEY|ControlMask, XK_period,       tagmon          )
+
+	{ MODKEY,             XK_1,            spawn,          {.v = dmenucmd } },
+	{ MODKEY,             XK_2,            spawn,          {.v = passmenu } },
+	{ MODKEY,             XK_3,            spawn,          {.v = clipmenu } },
+	{ MODKEY,             XK_Return,       spawn,          SHCMD("urxvtc -title Terminal") },
+	{ MODKEY|ShiftMask,   XK_Return,       spawn,          SHCMD("urxvtc -title Scratch -geometry 160x40") },
+	{ MODKEY|ControlMask, XK_b,            setlayout,      {.v = &layouts[1] } },
+	{ MODKEY|ControlMask, XK_t,            setlayout,      {.v = &layouts[0] } },
+	{ MODKEY|ControlMask, XK_g,            setlayout,      {.v = &layouts[4] } },
+	{ MODKEY|ShiftMask,   XK_9,            setmfact,       {.f = -0.05} },
+	{ MODKEY|ShiftMask,   XK_0,            setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,   XK_r,            setmfact,       {.f = 1.5} },  /* >1.0 sets absolute value */
+	{ MODKEY,             XK_backslash,    spawn,          SHCMD("firefox") },
+	{ MODKEY|ControlMask, XK_backslash,    spawn,          SHCMD("firefox --private-window") },
+	{ MODKEY|ShiftMask,   XK_backslash,    spawn,          SHCMD("tor-browser-en") },
+	{ MODKEY,             XK_slash,        spawn,          {.v = mpdmenu_library } },
+	{ MODKEY|ControlMask, XK_slash,        spawn,          {.v = mpdmenu_playlist } },
+	{ MODKEY,             XK_Prior,        spawn,          SHCMD("pulseaudio-ctl up") },
+	{ MODKEY,             XK_Next,         spawn,          SHCMD("pulseaudio-ctl down") },
+	{ MODKEY,             XK_m,            spawn,          SHCMD("pulseaudio-ctl mute") },
+	{ MODKEY,             XK_Down,         spawn,          SHCMD("mpc toggle") },
+	{ MODKEY,             XK_Right,        spawn,          SHCMD("mpc next") },
+	{ MODKEY,             XK_Left,         spawn,          SHCMD("mpc prev") },
+	{ MODKEY|ControlMask, XK_F10,          spawn,          SHCMD("screenshot --focused") },
+	{ MODKEY,             XK_F10,          spawn,          SHCMD("screenshot --all") },
+	{ False,              XK_F10,          spawn,          SHCMD("screenshot --select") },
+	{ MODKEY,             XK_Delete,       spawn,          SHCMD("slock") },
+	{ MODKEY,             XK_Delete,       spawn,          SHCMD("sleep 1; xset dpms force off") },
+	{ MODKEY,             XK_t,            spawn,          SHCMD("trello-popup") },
+	{ MODKEY,             XK_d,            spawn,          SHCMD("notify-send \"$(world-tz)\"") },
+	{ MODKEY,             XK_s,            spawn,          SHCMD("xinput-toggle -r yubikey -n -e -t 10") },
+	{ MODKEY,             XK_Tab,          zoom,           {0} },
+	{ MODKEY,             XK_BackSpace,    killclient,     {0} },
+	{ MODKEY|ShiftMask,   XK_space,        togglefloating, {0} },
+	{ Mod1Mask|ShiftMask, XK_q,            quit,           {0} },
 };
 
 /* button definitions */
