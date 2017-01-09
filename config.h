@@ -54,6 +54,8 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+	{ "TTT",      bstack },
+	{ "===",      bstackhoriz },
 };
 
 /* key definitions */
@@ -96,9 +98,9 @@ static Key keys[] = {
 	{ MODKEY,             XK_3,            spawn,          {.v = clipmenu } },
 	{ MODKEY,             XK_Return,       spawn,          SHCMD("urxvtc -title Terminal") },
 	{ MODKEY|ShiftMask,   XK_Return,       spawn,          SHCMD("urxvtc -title Scratch -geometry 160x40") },
-	{ MODKEY|ControlMask, XK_b,            setlayout,      {.v = &layouts[1] } },
 	{ MODKEY|ControlMask, XK_t,            setlayout,      {.v = &layouts[0] } },
-	{ MODKEY|ControlMask, XK_g,            setlayout,      {.v = &layouts[4] } },
+	{ MODKEY|ControlMask, XK_b,            setlayout,      {.v = &layouts[3] } },
+	{ MODKEY|ControlMask, XK_h,            setlayout,      {.v = &layouts[4] } },
 	{ MODKEY|ShiftMask,   XK_9,            setmfact,       {.f = -0.05} },
 	{ MODKEY|ShiftMask,   XK_0,            setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,   XK_r,            setmfact,       {.f = 1.5} },  /* >1.0 sets absolute value */
