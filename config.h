@@ -21,7 +21,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6" };
+static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7" };
  
 static const char pp_moni[]  = "pdfpc - presenter";
 static const char pp_proj[]  = "pdfpc - presentation";
@@ -88,6 +88,7 @@ static Key keys[] = {
   TK(                     XK_k,            3               )
   TK(                     XK_l,            4               )
   TK(                     XK_semicolon,    5               )
+  TK(                     XK_apostrophe,   6               )
   RK( MODKEY,             XK_comma,        focusstack      )
   RK( MODKEY|ControlMask, XK_comma,        pushstack       )
   RK( MODKEY,             XK_period,       focusmon        )
