@@ -61,13 +61,13 @@ static const Layout layouts[] = {
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TK(KEY,TAG) \
-	{ MODKEY,                         KEY,  view,        {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,               KEY,  toggleview,  {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,             KEY,  tag,         {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask,   KEY,  toggletag,   {.ui = 1 << TAG} },
+	{ KeyPress, MODKEY,                         KEY,  view,        {.ui = 1 << TAG} }, \
+	{ KeyPress, MODKEY|ShiftMask,               KEY,  toggleview,  {.ui = 1 << TAG} }, \
+	{ KeyPress, MODKEY|ControlMask,             KEY,  tag,         {.ui = 1 << TAG} }, \
+	{ KeyPress, MODKEY|ControlMask|ShiftMask,   KEY,  toggletag,   {.ui = 1 << TAG} },
 #define RK(MASK,KEY,ACTION) \
-	{ MASK,                           KEY,  ACTION,      {.i  = +1 } }, \
-	{ MASK|ShiftMask,                 KEY,  ACTION,      {.i  = -1 } },
+	{ KeyPress, MASK,                           KEY,  ACTION,      {.i  = +1 } }, \
+	{ KeyPress, MASK|ShiftMask,                 KEY,  ACTION,      {.i  = -1 } },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -94,40 +94,40 @@ static Key keys[] = {
   RK( MODKEY,             XK_period,       focusmon        )
   RK( MODKEY|ControlMask, XK_period,       tagmon          )
 
-	{ MODKEY,             XK_1,            spawn,          {.v = dmenucmd } },
-	{ MODKEY,             XK_2,            spawn,          {.v = passmenu } },
-	{ MODKEY,             XK_3,            spawn,          {.v = clipmenu } },
-	{ MODKEY,             XK_Return,       spawn,          SHCMD("urxvtc -title Terminal") },
-	{ MODKEY|ShiftMask,   XK_Return,       spawn,          SHCMD("urxvtc -title Scratch -geometry 160x40") },
-	{ MODKEY|ControlMask, XK_t,            setlayout,      {.v = &layouts[0] } },
-	{ MODKEY|ControlMask, XK_b,            setlayout,      {.v = &layouts[3] } },
-	{ MODKEY|ControlMask, XK_h,            setlayout,      {.v = &layouts[4] } },
-	{ MODKEY|ShiftMask,   XK_9,            setmfact,       {.f = -0.05} },
-	{ MODKEY|ShiftMask,   XK_0,            setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,   XK_r,            setmfact,       {.f = 1.5} },  /* >1.0 sets absolute value */
-	{ MODKEY,             XK_backslash,    spawn,          SHCMD("firefox") },
-	{ MODKEY|ControlMask, XK_backslash,    spawn,          SHCMD("firefox --private-window") },
-	{ MODKEY|ShiftMask,   XK_backslash,    spawn,          SHCMD("tor-browser-en") },
-	{ MODKEY,             XK_slash,        spawn,          {.v = mpdmenu_library } },
-	{ MODKEY|ControlMask, XK_slash,        spawn,          {.v = mpdmenu_playlist } },
-	{ MODKEY,             XK_Prior,        spawn,          SHCMD("pulseaudio-ctl up") },
-	{ MODKEY,             XK_Next,         spawn,          SHCMD("pulseaudio-ctl down") },
-	{ MODKEY,             XK_m,            spawn,          SHCMD("pulseaudio-ctl mute") },
-	{ MODKEY,             XK_Down,         spawn,          SHCMD("mpc toggle") },
-	{ MODKEY,             XK_Right,        spawn,          SHCMD("mpc next") },
-	{ MODKEY,             XK_Left,         spawn,          SHCMD("mpc prev") },
-	{ MODKEY|ControlMask, XK_F10,          spawn,          SHCMD("screenshot --focused") },
-	{ MODKEY,             XK_F10,          spawn,          SHCMD("screenshot --all") },
-	{ False,              XK_F10,          spawn,          SHCMD("screenshot --select") },
-	{ MODKEY,             XK_Delete,       spawn,          SHCMD("slock") },
-	{ MODKEY,             XK_Delete,       spawn,          SHCMD("sleep 1; xset dpms force off") },
-	{ MODKEY,             XK_t,            spawn,          SHCMD("trello-popup") },
-	{ MODKEY,             XK_d,            spawn,          SHCMD("notify-send \"$(world-tz)\"") },
-	{ MODKEY,             XK_s,            spawn,          SHCMD("xinput-toggle -r yubikey -n -e -t 10") },
-	{ MODKEY,             XK_Tab,          zoom,           {0} },
-	{ MODKEY,             XK_BackSpace,    killclient,     {0} },
-	{ MODKEY|ShiftMask,   XK_space,        togglefloating, {0} },
-	{ Mod1Mask|ShiftMask, XK_q,            quit,           {0} },
+	{ KeyPress,   MODKEY,             XK_1,            spawn,          {.v = dmenucmd } },
+	{ KeyPress,   MODKEY,             XK_2,            spawn,          {.v = passmenu } },
+	{ KeyPress,   MODKEY,             XK_3,            spawn,          {.v = clipmenu } },
+	{ KeyPress,   MODKEY,             XK_Return,       spawn,          SHCMD("urxvtc -title Terminal") },
+	{ KeyPress,   MODKEY|ShiftMask,   XK_Return,       spawn,          SHCMD("urxvtc -title Scratch -geometry 160x40") },
+	{ KeyPress,   MODKEY|ControlMask, XK_t,            setlayout,      {.v = &layouts[0] } },
+	{ KeyPress,   MODKEY|ControlMask, XK_b,            setlayout,      {.v = &layouts[3] } },
+	{ KeyPress,   MODKEY|ControlMask, XK_h,            setlayout,      {.v = &layouts[4] } },
+	{ KeyPress,   MODKEY|ShiftMask,   XK_9,            setmfact,       {.f = -0.05} },
+	{ KeyPress,   MODKEY|ShiftMask,   XK_0,            setmfact,       {.f = +0.05} },
+	{ KeyPress,   MODKEY|ShiftMask,   XK_r,            setmfact,       {.f = 1.5} },  /* >1.0 sets absolute value */
+	{ KeyPress,   MODKEY,             XK_backslash,    spawn,          SHCMD("firefox") },
+	{ KeyPress,   MODKEY|ControlMask, XK_backslash,    spawn,          SHCMD("firefox --private-window") },
+	{ KeyPress,   MODKEY|ShiftMask,   XK_backslash,    spawn,          SHCMD("tor-browser-en") },
+	{ KeyPress,   MODKEY,             XK_slash,        spawn,          {.v = mpdmenu_library } },
+	{ KeyPress,   MODKEY|ControlMask, XK_slash,        spawn,          {.v = mpdmenu_playlist } },
+	{ KeyPress,   MODKEY,             XK_Prior,        spawn,          SHCMD("pulseaudio-ctl up") },
+	{ KeyPress,   MODKEY,             XK_Next,         spawn,          SHCMD("pulseaudio-ctl down") },
+	{ KeyPress,   MODKEY,             XK_m,            spawn,          SHCMD("pulseaudio-ctl mute") },
+	{ KeyPress,   MODKEY,             XK_Down,         spawn,          SHCMD("mpc toggle") },
+	{ KeyPress,   MODKEY,             XK_Right,        spawn,          SHCMD("mpc next") },
+	{ KeyPress,   MODKEY,             XK_Left,         spawn,          SHCMD("mpc prev") },
+	{ KeyRelease, MODKEY|ControlMask, XK_F10,          spawn,          SHCMD("screenshot --focused") },
+	{ KeyRelease, MODKEY,             XK_F10,          spawn,          SHCMD("screenshot --all") },
+	{ KeyRelease, False,              XK_F10,          spawn,          SHCMD("screenshot --select") },
+	{ KeyPress,   MODKEY,             XK_Delete,       spawn,          SHCMD("slock") },
+	{ KeyPress,   MODKEY,             XK_Delete,       spawn,          SHCMD("sleep 1; xset dpms force off") },
+	{ KeyPress,   MODKEY,             XK_t,            spawn,          SHCMD("trello-popup") },
+	{ KeyPress,   MODKEY,             XK_d,            spawn,          SHCMD("notify-send \"$(world-tz)\"") },
+	{ KeyPress,   MODKEY,             XK_s,            spawn,          SHCMD("xinput-toggle -r yubikey -n -e -t 10") },
+	{ KeyPress,   MODKEY,             XK_Tab,          zoom,           {0} },
+	{ KeyPress,   MODKEY,             XK_BackSpace,    killclient,     {0} },
+	{ KeyPress,   MODKEY|ShiftMask,   XK_space,        togglefloating, {0} },
+	{ KeyPress,   Mod1Mask|ShiftMask, XK_q,            quit,           {0} },
 };
 
 /* button definitions */
