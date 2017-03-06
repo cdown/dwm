@@ -40,8 +40,8 @@ static const Rule rules[] = {
 	{ "Firefox",  NULL,       NULL,       1 << 1,       False,      False,       -1 },
 	{ NULL, "Tor Browser",    NULL,       1 << 1,       False,      False,       -1 },
 	{ "Spotify",  NULL,       NULL,       1 << 5,       False,      False,       -1 },
-	{ NULL,       NULL,       pp_moni,    0,            False,      False,       2  },
-	{ NULL,       NULL,       pp_proj,    0,            False,      False,       1  },
+	{ NULL,       NULL,       pp_moni,    0,            False,      True,       2  },
+	{ NULL,       NULL,       pp_proj,    0,            False,      True,       1  },
 };
 
 /* layout(s) */
