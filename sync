@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+if ! git remote | grep -x suckless; then
+    git remote add suckless git://git.suckless.org/dwm
+fi
+
+git fetch -p suckless
+git rebase -p suckless/master
