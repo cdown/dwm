@@ -70,7 +70,7 @@ static const Layout layouts[] = {
 	{ KeyPress, MASK|ShiftMask,                 KEY,  ACTION,      {.i  = -1 } },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", "exec " cmd, NULL } }
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
