@@ -4,7 +4,8 @@ upstream (see the [`sync`](https://github.com/cdown/dwm/blob/master/sync)
 script).
 
 It looks something like this when used along with [my
-dotfiles](https://github.com/cdown/dotfiles):
+dotfiles](https://github.com/cdown/dotfiles) and [ansible
+playbook](https://github.com/cdown/ansible-desktop):
 
 ![Screenshot](https://raw.githubusercontent.com/cdown/dwm/master/screenshot.png)
 
