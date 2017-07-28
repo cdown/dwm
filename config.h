@@ -126,6 +126,7 @@ static Key keys[] = {
 	{ KeyPress,   MODKEY,             XK_s,            spawn,          SHCMD("xinput-toggle -r yubikey -n -e -t 10") },
 	{ KeyPress,   MODKEY,             XK_Tab,          zoom,           {0} },
 	{ KeyPress,   MODKEY,             XK_BackSpace,    killclient,     {0} },
+	{ KeyPress,   MODKEY|ShiftMask,   XK_BackSpace,    killunsel,      {0} },
 	{ KeyPress,   MODKEY|ShiftMask,   XK_space,        togglefloating, {0} },
 	{ KeyPress,   Mod1Mask|ShiftMask, XK_q,            quit,           {0} },
 };
