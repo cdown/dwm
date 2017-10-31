@@ -1,3 +1,5 @@
+#include <X11/XF86keysym.h>
+
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
@@ -22,7 +24,7 @@ static const char *colors[][3]      = {
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7" };
- 
+
 static const char pp_moni[]  = "pdfpc - presenter";
 static const char pp_proj[]  = "pdfpc - presentation";
 
@@ -114,6 +116,9 @@ static Key keys[] = {
 	{ KeyPress,   MODKEY,             XK_Prior,        spawn,          ESHCMD("pulseaudio-ctl up") },
 	{ KeyPress,   MODKEY,             XK_Next,         spawn,          ESHCMD("pulseaudio-ctl down") },
 	{ KeyPress,   MODKEY,             XK_m,            spawn,          ESHCMD("pulseaudio-ctl mute") },
+	{ KeyPress,   False,              XF86XK_AudioRaiseVolume, spawn,  ESHCMD("pulseaudio-ctl up") },
+	{ KeyPress,   False,              XF86XK_AudioLowerVolume, spawn,  ESHCMD("pulseaudio-ctl down") },
+	{ KeyPress,   False,              XF86XK_AudioMute,        spawn,  ESHCMD("pulseaudio-ctl mute") },
 	{ KeyPress,   MODKEY,             XK_Down,         spawn,          ESHCMD("mpc toggle") },
 	{ KeyPress,   MODKEY,             XK_Right,        spawn,          ESHCMD("mpc next") },
 	{ KeyPress,   MODKEY,             XK_Left,         spawn,          ESHCMD("mpc prev") },
