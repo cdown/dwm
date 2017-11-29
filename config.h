@@ -131,6 +131,7 @@ static Key keys[] = {
 	{ KeyPress,   MODKEY,             XK_e,            spawn,          ESHCMD("nolock '1 hour'") },
 	{ KeyPress,   MODKEY,             XK_d,            spawn,          ESHCMD("notify-send \"$(world-tz)\"") },
 	{ KeyPress,   MODKEY,             XK_s,            spawn,          ESHCMD("xinput-toggle -r yubikey -n -e -t 10") },
+	{ KeyPress,   MODKEY,             XK_q,            spawn,          ESHCMD("kill-idle-shells") },
 	{ KeyPress,   MODKEY,             XK_Tab,          zoom,           {0} },
 	{ KeyPress,   MODKEY,             XK_BackSpace,    killclient,     {0} },
 	{ KeyPress,   MODKEY|ShiftMask,   XK_BackSpace,    killunsel,      {0} },
