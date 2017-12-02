@@ -34,14 +34,9 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     iscentered  isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            False,      True,        -1 },
 	{ NULL,       NULL,       "Scratch",  0,            True,       True,        -1 },
 	{ NULL,       NULL,       "mail",     1 << 3,       False,      False,       -1 },
 	{ NULL,       NULL,       "irc",      1 << 2,       False,      False,       -1 },
-	{ NULL,       NULL,       "Terminal", 1,            False,      False,       -1 },
-	{ "chromium", NULL,       NULL,       1 << 1,       False,      False,       -1 },
-	{ NULL, "Tor Browser",    NULL,       1 << 1,       False,      False,       -1 },
-	{ "Spotify",  NULL,       NULL,       1 << 5,       False,      False,       -1 },
 	{ NULL,       NULL,       pp_moni,    0,            False,      True,       2  },
 	{ NULL,       NULL,       pp_proj,    0,            False,      True,       1  },
 };
