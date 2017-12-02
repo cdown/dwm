@@ -130,6 +130,7 @@ static Key keys[] = {
 	{ KeyPress,   MODKEY,             XK_t,            spawn,          ESHCMD("trello-popup") },
 	{ KeyPress,   MODKEY,             XK_e,            spawn,          ESHCMD("nolock '1 hour'") },
 	{ KeyPress,   MODKEY,             XK_d,            spawn,          ESHCMD("notify-send \"$(world-tz)\"") },
+	{ KeyPress,   MODKEY,             XK_f,            spawn,          ESHCMD("notify-send \"$(bats)\"") },
 	{ KeyPress,   MODKEY,             XK_s,            spawn,          ESHCMD("xinput-toggle -r yubikey -n -e -t 10") },
 	{ KeyPress,   MODKEY,             XK_q,            spawn,          ESHCMD("kill-idle-shells") },
 	{ KeyPress,   MODKEY,             XK_Tab,          zoom,           {0} },
