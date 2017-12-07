@@ -33,12 +33,13 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     iscentered  isfloating   monitor */
-	{ NULL,       NULL,       "Scratch",  0,            True,       True,        -1 },
-	{ NULL,       NULL,       "mail",     1 << 3,       False,      False,       -1 },
-	{ NULL,       NULL,       "irc",      1 << 2,       False,      False,       -1 },
-	{ NULL,       NULL,       pp_moni,    0,            False,      True,       2  },
-	{ NULL,       NULL,       pp_proj,    0,            False,      True,       1  },
+	/* class      instance    title       tags mask     iscentered  isfloating  isterminal  noswallow   monitor */
+	{ NULL,       NULL,       "Terminal", 0,            False,      False,      1,          1,          -1 },
+	{ NULL,       NULL,       "Scratch",  0,            True,       True,       1,          1,          -1 },
+	{ NULL,       NULL,       "mail",     1 << 3,       False,      False,      0,          1,          -1 },
+	{ NULL,       NULL,       "irc",      1 << 2,       False,      False,      0,          1,          -1 },
+	{ NULL,       NULL,       pp_moni,    0,            False,      True,       0,          0,          2  },
+	{ NULL,       NULL,       pp_proj,    0,            False,      True,       0,          0,          1  },
 };
 
 /* layout(s) */
