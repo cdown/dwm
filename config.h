@@ -108,6 +108,7 @@ static Key keys[] = {
 	{ KeyPress,   MODKEY|ShiftMask,   XK_0,            setmfact,       {.f = +0.05} },
 	{ KeyPress,   MODKEY|ShiftMask,   XK_r,            setmfact,       {.f = 1.5} },  /* >1.0 sets absolute value */
 	{ KeyPress,   MODKEY,             XK_backslash,    spawn,          ESHCMD("google-chrome-stable") },
+	{ KeyPress,   MODKEY|ControlMask, XK_backslash,    spawn,          ESHCMD("google-chrome-stable --incognito") },
 	{ KeyPress,   MODKEY|ShiftMask,   XK_backslash,    spawn,          ESHCMD("tor-browser-en") },
 	{ KeyPress,   MODKEY,             XK_slash,        spawn,          {.v = mpdmenu_library } },
 	{ KeyPress,   MODKEY|ControlMask, XK_slash,        spawn,          {.v = mpdmenu_playlist } },
