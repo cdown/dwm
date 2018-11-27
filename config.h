@@ -80,6 +80,8 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-i", "-fn", dmen
 
 static const char *mpdmenu_library[]  = { "mpdmenu", "-l", "::", "-i", "-l", "20", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *mpdmenu_playlist[] = { "mpdmenu", "-p", "::", "-i", "-l", "20", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *btmenu_connect[]  = { "btmenu", "-c", "::", "-i", "-l", "20", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *btmenu_disconnect[] = { "btmenu", "-d", "::", "-i", "-l", "20", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *clipmenu[]         = { "clipmenu", "-i", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *passmenu[]         = { "passmenu", "-i", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 
@@ -99,6 +101,8 @@ static Key keys[] = {
 	{ KeyPress,   MODKEY,             XK_1,            spawn,          {.v = dmenucmd } },
 	{ KeyPress,   MODKEY,             XK_2,            spawn,          {.v = passmenu } },
 	{ KeyPress,   MODKEY,             XK_3,            spawn,          {.v = clipmenu } },
+	{ KeyPress,   MODKEY,             XK_4,            spawn,          {.v = btmenu_connect } },
+	{ KeyPress,   MODKEY|ControlMask, XK_4,            spawn,          {.v = btmenu_disconnect } },
 	{ KeyPress,   MODKEY,             XK_Return,       spawn,          ESHCMD("urxvtc -title Terminal") },
 	{ KeyPress,   MODKEY|ShiftMask,   XK_Return,       spawn,          ESHCMD("urxvtc -title Scratch -geometry 160x40") },
 	{ KeyPress,   MODKEY|ControlMask, XK_t,            setlayout,      {.v = &layouts[0] } },
