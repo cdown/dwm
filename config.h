@@ -137,6 +137,8 @@ static Key keys[] = {
 	{ KeyPress,   MODKEY,             XK_s,            spawn,          ESHCMD("xinput-toggle -r yubikey -n -e -t 10") },
 	{ KeyPress,   MODKEY,             XK_q,            spawn,          ESHCMD("kill-idle-shells") },
 	{ KeyPress,   MODKEY,             XK_r,            spawn,          ESHCMD("nota-todo-reminder") },
+	{ KeyPress,   MODKEY,             XK_n,            spawn,          ESHCMD("systemctl --user start rain") },
+	{ KeyPress,   MODKEY|ControlMask, XK_n,            spawn,          ESHCMD("systemctl --user stop rain") },
 	{ KeyPress,   MODKEY,             XK_Tab,          zoom,           {0} },
 	{ KeyPress,   MODKEY,             XK_BackSpace,    killclient,     {0} },
 	{ KeyPress,   MODKEY|ShiftMask,   XK_BackSpace,    killunsel,      {0} },
