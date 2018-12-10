@@ -70,6 +70,10 @@ static const Layout layouts[] = {
 	{ KeyPress, MASK,                           KEY,  ACTION,      {.i  = +1 } }, \
 	{ KeyPress, MASK|ShiftMask,                 KEY,  ACTION,      {.i  = -1 } },
 
+#define AM(KEY,FLAC) \
+	{ KeyPress, MODKEY,             KEY, spawn, ESHCMD("systemctl --user start ambient@" #FLAC) }, \
+	{ KeyPress, MODKEY|ControlMask, KEY, spawn, ESHCMD("systemctl --user stop ambient@" #FLAC) },
+
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 #define ESHCMD(cmd) SHCMD("exec " cmd)
@@ -97,6 +101,9 @@ static Key keys[] = {
   RK( MODKEY|ControlMask, XK_comma,        pushstack       )
   RK( MODKEY,             XK_period,       focusmon        )
   RK( MODKEY|ControlMask, XK_period,       tagmon          )
+
+  AM(XK_n, rain)
+  AM(XK_b, forest)
 
 	{ KeyPress,   MODKEY,             XK_1,            spawn,          {.v = dmenucmd } },
 	{ KeyPress,   MODKEY,             XK_2,            spawn,          {.v = passmenu } },
@@ -137,8 +144,6 @@ static Key keys[] = {
 	{ KeyPress,   MODKEY,             XK_s,            spawn,          ESHCMD("xinput-toggle -r yubikey -n -e -t 10") },
 	{ KeyPress,   MODKEY,             XK_q,            spawn,          ESHCMD("kill-idle-shells") },
 	{ KeyPress,   MODKEY,             XK_r,            spawn,          ESHCMD("nota-todo-reminder") },
-	{ KeyPress,   MODKEY,             XK_n,            spawn,          ESHCMD("systemctl --user start rain") },
-	{ KeyPress,   MODKEY|ControlMask, XK_n,            spawn,          ESHCMD("systemctl --user stop rain") },
 	{ KeyPress,   MODKEY,             XK_Tab,          zoom,           {0} },
 	{ KeyPress,   MODKEY,             XK_BackSpace,    killclient,     {0} },
 	{ KeyPress,   MODKEY|ShiftMask,   XK_BackSpace,    killunsel,      {0} },
