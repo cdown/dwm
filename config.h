@@ -65,14 +65,14 @@ static const Layout layouts[] = {
 	{ KeyPress, MODKEY,                         KEY,  view,        {.ui = 1 << TAG} }, \
 	{ KeyPress, MODKEY|ShiftMask,               KEY,  toggleview,  {.ui = 1 << TAG} }, \
 	{ KeyPress, MODKEY|ControlMask,             KEY,  tag,         {.ui = 1 << TAG} }, \
-	{ KeyPress, MODKEY|ControlMask|ShiftMask,   KEY,  toggletag,   {.ui = 1 << TAG} },
+	{ KeyPress, MODKEY|ControlMask|ShiftMask,   KEY,  toggletag,   {.ui = 1 << TAG} }
 #define RK(MASK,KEY,ACTION) \
 	{ KeyPress, MASK,                           KEY,  ACTION,      {.i  = +1 } }, \
-	{ KeyPress, MASK|ShiftMask,                 KEY,  ACTION,      {.i  = -1 } },
+	{ KeyPress, MASK|ShiftMask,                 KEY,  ACTION,      {.i  = -1 } }
 
 #define AM(KEY,FLAC) \
 	{ KeyPress, MODKEY,             KEY, spawn, ESHCMD("systemctl --user start ambient@" #FLAC) }, \
-	{ KeyPress, MODKEY|ControlMask, KEY, spawn, ESHCMD("systemctl --user stop ambient@" #FLAC) },
+	{ KeyPress, MODKEY|ControlMask, KEY, spawn, ESHCMD("systemctl --user stop ambient@" #FLAC) }
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -90,20 +90,20 @@ static const char *clipmenu[]         = { "clipmenu", "-i", "-fn", dmenufont, "-
 static const char *passmenu[]         = { "passmenu", "-i", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 
 static Key keys[] = {
-  TK(                     XK_i,            0               )
-  TK(                     XK_o,            1               )
-  TK(                     XK_p,            2               )
-  TK(                     XK_k,            3               )
-  TK(                     XK_l,            4               )
-  TK(                     XK_semicolon,    5               )
-  TK(                     XK_apostrophe,   6               )
-  RK( MODKEY,             XK_comma,        focusstack      )
-  RK( MODKEY|ControlMask, XK_comma,        pushstack       )
-  RK( MODKEY,             XK_period,       focusmon        )
-  RK( MODKEY|ControlMask, XK_period,       tagmon          )
+  TK(                     XK_i,            0               ),
+  TK(                     XK_o,            1               ),
+  TK(                     XK_p,            2               ),
+  TK(                     XK_k,            3               ),
+  TK(                     XK_l,            4               ),
+  TK(                     XK_semicolon,    5               ),
+  TK(                     XK_apostrophe,   6               ),
+  RK( MODKEY,             XK_comma,        focusstack      ),
+  RK( MODKEY|ControlMask, XK_comma,        pushstack       ),
+  RK( MODKEY,             XK_period,       focusmon        ),
+  RK( MODKEY|ControlMask, XK_period,       tagmon          ),
 
-  AM(XK_n, rain)
-  AM(XK_b, forest)
+  AM(XK_n, rain),
+  AM(XK_b, forest),
 
 	{ KeyPress,   MODKEY,             XK_1,            spawn,          {.v = dmenucmd } },
 	{ KeyPress,   MODKEY,             XK_2,            spawn,          {.v = passmenu } },
