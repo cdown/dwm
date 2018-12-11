@@ -103,7 +103,7 @@ static Key keys[] = {
   RK( MODKEY|ControlMask, XK_period,       tagmon          ),
 
   AM(XK_n, rain),
-  AM(XK_b, forest),
+  AM(XK_c, forest),
 
 	{ KeyPress,   MODKEY,             XK_1,            spawn,          {.v = dmenucmd } },
 	{ KeyPress,   MODKEY,             XK_2,            spawn,          {.v = passmenu } },
