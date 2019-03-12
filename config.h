@@ -122,6 +122,7 @@ static Key keys[] = {
 	{ KeyPress,   MODKEY|ShiftMask,   XK_backslash,            spawn,          ESHCMD("tor-browser-en") },
 	{ KeyPress,   MODKEY,             XK_slash,                spawn,          {.v = mpdmenu_library } },
 	{ KeyPress,   MODKEY|ControlMask, XK_slash,                spawn,          {.v = mpdmenu_playlist } },
+	{ KeyPress,   MODKEY,             XK_a,                    spawn,          ESHCMD("lock-sleep") },
 	{ KeyPress,   MODKEY,             XK_Prior,                spawn,          ESHCMD("pulseaudio-ctl up") },
 	{ KeyPress,   False,              XF86XK_AudioRaiseVolume, spawn,          ESHCMD("pulseaudio-ctl up") },
 	{ KeyPress,   MODKEY,             XK_Next,                 spawn,          ESHCMD("pulseaudio-ctl down") },
