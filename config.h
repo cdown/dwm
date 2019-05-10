@@ -139,7 +139,7 @@ static Key keys[] = {
 	{ KeyRelease, MODKEY|ControlMask, XK_F10,                  spawn,          ESHCMD("screenshot --focused") },
 	{ KeyRelease, MODKEY,             XK_F10,                  spawn,          ESHCMD("screenshot --all") },
 	{ KeyRelease, False,              XK_F10,                  spawn,          ESHCMD("screenshot --select") },
-	{ KeyPress,   MODKEY,             XK_Delete,               spawn,          ESHCMD("slock") },
+	{ KeyPress,   MODKEY,             XK_Delete,               spawn,          ESHCMD("physlock") },
 	{ KeyPress,   MODKEY,             XK_Delete,               spawn,          SHCMD("sleep 1; xset dpms force off") },
 	{ KeyPress,   MODKEY,             XK_t,                    spawn,          ESHCMD("trello-popup") },
 	{ KeyPress,   MODKEY,             XK_d,                    spawn,          ESHCMD("notify-send \"$(world-tz)\"") },
