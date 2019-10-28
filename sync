@@ -8,4 +8,4 @@ fi
 git branch "$(date +%Y%m%d%H%M%S%N)"
 
 git fetch -p suckless
-git rebase -p suckless/master
+git rebase -r suckless/master
