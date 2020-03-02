@@ -1,11 +1,18 @@
 #!/bin/bash -e
 
-if ! git remote | grep -x suckless; then
+if ! git remote | grep -qx suckless; then
     git remote add suckless git://git.suckless.org/dwm
 fi
 
-# back up, since we are rewriting history
-git branch "$(date +%Y%m%d%H%M%S%N)"
-
 git fetch -p suckless
-git rebase -r suckless/master
+
+old_base=$(git merge-base master suckless/master)
+new_base=$(git rev-parse suckless/master)
+
+if [[ "$old_base" == "$new_base" ]]; then
+    printf '%s\n' "No new changes upstream" >&2
+else
+    # back up, since we are rewriting history
+    git branch "$(date +%Y%m%d%H%M%S%N)"
+    git rebase -r suckless/master
+fi
