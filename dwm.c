@@ -1119,6 +1119,7 @@ keypress(XEvent *e)
 
 	ev = &e->xkey;
 	keysym = XKeycodeToKeysym(dpy, (KeyCode)ev->keycode, 0);
+	fprintf(stderr, "got keycode %s (%lu)\n", XKeysymToString(keysym), keysym);
 	for (i = 0; i < LENGTH(keys); i++)
 		if (keysym == keys[i].keysym
 		&& ev->type == keys[i].type
@@ -1596,6 +1597,8 @@ run(void)
 	while (running && !XNextEvent(dpy, &ev))
 		if (handler[ev.type])
 			handler[ev.type](&ev); /* call handler */
+		else
+			fprintf(stderr, "no handler for type %d\n", ev.type);
 }
 
 void
@@ -1861,6 +1864,7 @@ sigchld(int unused)
 void
 spawn(const Arg *arg)
 {
+	fprintf(stderr, "arg->v: %s\n", *(char **)arg->v);
 	if (arg->v == dmenucmd)
 		dmenumon[0] = '0' + selmon->num;
 	if (fork() == 0) {
