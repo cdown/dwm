@@ -8,3 +8,19 @@ dotfiles](https://github.com/cdown/dotfiles) and [ansible
 playbook](https://github.com/cdown/ansible-desktop):
 
 ![Screenshot](https://raw.githubusercontent.com/cdown/dwm/master/screenshot.png)
+
+# Patches
+
+## Written by me
+
+- alwaysfullscreen (upstreamed)
+- killunsel (upstreamed)
+- resizeclient (pending upstream)
+- warp v2 (not upstreamed)
+
+## By others
+
+- bottomstack
+- keypressrelease
+- pertag
+- push_no_master
