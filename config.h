@@ -116,7 +116,7 @@ static Key keys[] = {
 	{ KeyPress,   MODKEY|ControlMask, XK_h,                    setlayout,      {.v = &layouts[4] } },
 	{ KeyPress,   MODKEY|ShiftMask,   XK_9,                    setmfact,       {.f = -0.05} },
 	{ KeyPress,   MODKEY|ShiftMask,   XK_0,                    setmfact,       {.f = +0.05} },
-	{ KeyPress,   MODKEY|ShiftMask,   XK_r,                    setmfact,       {.f = 1.5} },  /* >1.0 sets absolute value */
+	{ KeyPress,   MODKEY|ShiftMask,   XK_r,                    resetlayout,    {0} },
 	{ KeyPress,   MODKEY,             XK_backslash,            spawn,          ESHCMD("google-chrome-stable") },
 	{ KeyPress,   MODKEY|ControlMask, XK_backslash,            spawn,          ESHCMD("google-chrome-stable --incognito") },
 	{ KeyPress,   MODKEY|ShiftMask,   XK_backslash,            spawn,          ESHCMD("tor-browser-en") },
