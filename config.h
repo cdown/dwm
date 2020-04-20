@@ -89,20 +89,20 @@ static const char *clipmenu[]         = { "clipmenu", "-i", "-fn", dmenufont, "-
 static const char *passmenu[]         = { "passmenu-wrap", "-i", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 
 static Key keys[] = {
-  TK(                     XK_i,            0               ),
-  TK(                     XK_o,            1               ),
-  TK(                     XK_p,            2               ),
-  TK(                     XK_k,            3               ),
-  TK(                     XK_l,            4               ),
-  TK(                     XK_semicolon,    5               ),
-  TK(                     XK_apostrophe,   6               ),
-  RK( MODKEY,             XK_comma,        focusstack      ),
-  RK( MODKEY|ControlMask, XK_comma,        pushstack       ),
-  RK( MODKEY,             XK_period,       focusmon        ),
-  RK( MODKEY|ControlMask, XK_period,       tagmon          ),
+	TK(                    XK_i,            0               ),
+	TK(                    XK_o,            1               ),
+	TK(                    XK_p,            2               ),
+	TK(                    XK_k,            3               ),
+	TK(                    XK_l,            4               ),
+	TK(                    XK_semicolon,    5               ),
+	TK(                    XK_apostrophe,   6               ),
+	RK(MODKEY,             XK_comma,        focusstack      ),
+	RK(MODKEY|ControlMask, XK_comma,        pushstack       ),
+	RK(MODKEY,             XK_period,       focusmon        ),
+	RK(MODKEY|ControlMask, XK_period,       tagmon          ),
 
-  AM(XK_n, rain),
-  AM(XK_c, forest),
+	AM(XK_n, rain),
+	AM(XK_c, forest),
 
 	{ KeyPress,   MODKEY,             XK_1,                    spawn,          {.v = dmenucmd } },
 	{ KeyPress,   MODKEY,             XK_2,                    spawn,          {.v = passmenu } },
