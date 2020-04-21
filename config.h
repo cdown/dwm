@@ -38,8 +38,6 @@ static const Rule rules[] = {
 	{ NULL,       NULL,       "mail",     1 << 3,       False,      False,       -1 },
 	{ NULL,       NULL,       "irc",      1 << 2,       False,      False,       -1 },
 	{ NULL,       NULL,       "Terminal", 1,            False,      False,       -1 },
-	{ NULL, "Tor Browser",    NULL,       1 << 1,       False,      False,       -1 },
-	{ "Spotify",  NULL,       NULL,       1 << 5,       False,      False,       -1 },
 	{ NULL,       NULL,       pp_moni,    0,            False,      True,       2  },
 	{ NULL,       NULL,       pp_proj,    0,            False,      True,       1  },
 };
@@ -53,9 +51,7 @@ static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
 	{ "TTT",      bstack },
-	{ "===",      bstackhoriz },
 };
 
 /* key definitions */
@@ -112,14 +108,12 @@ static Key keys[] = {
 	{ KeyPress,   MODKEY,             XK_Return,               spawn,          ESHCMD("urxvtc -title Terminal") },
 	{ KeyPress,   MODKEY|ShiftMask,   XK_Return,               spawn,          ESHCMD("urxvtc -title Scratch -geometry 160x40") },
 	{ KeyPress,   MODKEY|ControlMask, XK_t,                    setlayout,      {.v = &layouts[0] } },
-	{ KeyPress,   MODKEY|ControlMask, XK_b,                    setlayout,      {.v = &layouts[3] } },
-	{ KeyPress,   MODKEY|ControlMask, XK_h,                    setlayout,      {.v = &layouts[4] } },
+	{ KeyPress,   MODKEY|ControlMask, XK_b,                    setlayout,      {.v = &layouts[2] } },
 	{ KeyPress,   MODKEY|ShiftMask,   XK_9,                    setmfact,       {.f = -0.05} },
 	{ KeyPress,   MODKEY|ShiftMask,   XK_0,                    setmfact,       {.f = +0.05} },
 	{ KeyPress,   MODKEY|ShiftMask,   XK_r,                    resetlayout,    {0} },
 	{ KeyPress,   MODKEY,             XK_backslash,            spawn,          ESHCMD("google-chrome-stable") },
 	{ KeyPress,   MODKEY|ControlMask, XK_backslash,            spawn,          ESHCMD("google-chrome-stable --incognito") },
-	{ KeyPress,   MODKEY|ShiftMask,   XK_backslash,            spawn,          ESHCMD("tor-browser-en") },
 	{ KeyPress,   MODKEY,             XK_slash,                spawn,          {.v = mpdmenu_library } },
 	{ KeyPress,   MODKEY|ControlMask, XK_slash,                spawn,          {.v = mpdmenu_playlist } },
 	{ KeyPress,   MODKEY,             XK_a,                    spawn,          ESHCMD("lock-sleep") },
@@ -140,11 +134,8 @@ static Key keys[] = {
 	{ KeyRelease, MODKEY,             XK_F10,                  spawn,          ESHCMD("screenshot --all") },
 	{ KeyRelease, False,              XK_F10,                  spawn,          ESHCMD("screenshot --select") },
 	{ KeyPress,   MODKEY,             XK_Delete,               spawn,          ESHCMD("lockphyslock") },
-	{ KeyPress,   MODKEY,             XK_Delete,               spawn,          SHCMD("sleep 1; xset dpms force off") },
-	{ KeyPress,   MODKEY,             XK_t,                    spawn,          ESHCMD("trello-popup") },
 	{ KeyPress,   MODKEY,             XK_d,                    spawn,          ESHCMD("notify-send \"$(world-tz)\"") },
 	{ KeyPress,   MODKEY,             XK_f,                    spawn,          ESHCMD("notify-send \"$(bats)\"") },
-	{ KeyPress,   MODKEY,             XK_e,                    spawn,          ESHCMD("wtb-popup") },
 	{ KeyPress,   MODKEY,             XK_s,                    spawn,          ESHCMD("xinput-toggle -r yubikey -n -e -t 10") },
 	{ KeyPress,   MODKEY,             XK_q,                    spawn,          ESHCMD("kill-idle-shells") },
 	{ KeyPress,   MODKEY,             XK_r,                    spawn,          ESHCMD("nota-todo-reminder") },
@@ -160,15 +151,8 @@ static Key keys[] = {
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
 
 /* vim: set noexpandtab: */
