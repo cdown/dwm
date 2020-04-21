@@ -3,11 +3,8 @@ changes/refactors to core dwm code, but I do keep the changes in sync with
 upstream (see the [`sync`](https://github.com/cdown/dwm/blob/master/sync)
 script).
 
-It looks something like this when used along with [my
-dotfiles](https://github.com/cdown/dotfiles) and [ansible
-playbook](https://github.com/cdown/ansible-desktop):
-
-![Screenshot](https://raw.githubusercontent.com/cdown/dwm/master/screenshot.png)
+A lot of the code is unused (eg. I don't use the bar, window titles, etc.) but
+in order to minimise merge conflicts, the dead code is left alone.
 
 # Patches
 
@@ -24,3 +21,11 @@ playbook](https://github.com/cdown/ansible-desktop):
 - keypressrelease
 - pertag
 - push_no_master
+
+# Screenshot
+
+It looks something like this when used along with [my
+dotfiles](https://github.com/cdown/dotfiles) and [ansible
+playbook](https://github.com/cdown/ansible-desktop):
+
+![Screenshot](https://raw.githubusercontent.com/cdown/dwm/master/screenshot.png)
