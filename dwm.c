@@ -244,7 +244,7 @@ static void updatetitle(Client *c);
 static void updatewindowtype(Client *c);
 static void updatewmhints(Client *c);
 static void view(const Arg *arg);
-static void warp(const Client *c);
+static void warp(Client *c);
 static Client *wintoclient(Window w);
 static Monitor *wintomon(Window w);
 static int xerror(Display *dpy, XErrorEvent *ee);
@@ -2334,7 +2334,7 @@ view(const Arg *arg)
 }
 
 void
-warp(const Client *c)
+warp(Client *c)
 {
 	int x, y;
 
@@ -2343,7 +2343,7 @@ warp(const Client *c)
 		return;
 	}
 
-	Atom wtype = getatomprop((Client *)c, netatom[NetWMWindowType]);
+	Atom wtype = getatomprop(c, netatom[NetWMWindowType]);
 	if (wtype == netatom[NetWMWindowTypeDialog] ||
 	    wtype == netatom[NetWMWindowTypeNotification])
 		return;
