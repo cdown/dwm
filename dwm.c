@@ -1751,7 +1751,7 @@ setlayout(const Arg *arg)
 		selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag];
 	}
 	if (arg && arg->v)
-		selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
+		selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (const Layout *)arg->v;
 	selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt];
 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof selmon->ltsymbol);
 	if (selmon->sel)
@@ -1893,6 +1893,7 @@ spawn(const Arg *arg)
 		dmenumon[0] = '0' + selmon->num;
 	fprintf(stderr, "arg->v: %s\n", *(char **)arg->v);
 	if (fork() == 0) {
+		char *const *cmd = arg->v;
 		if (dpy)
 			close(ConnectionNumber(dpy));
 		setsid();
@@ -1902,8 +1903,8 @@ spawn(const Arg *arg)
 		sa.sa_handler = SIG_DFL;
 		sigaction(SIGCHLD, &sa, NULL);
 
-		execvp(((char **)arg->v)[0], (char **)arg->v);
-		die("dwm: execvp '%s' failed:", ((char **)arg->v)[0]);
+		execvp(cmd[0], cmd);
+		die("dwm: execvp '%s' failed:", cmd[0]);
 	}
 }
 
