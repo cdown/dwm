@@ -97,6 +97,8 @@ static Key keys[] = {
 	RK(MODKEY,             XK_period,       focusmon        ),
 	RK(MODKEY|ControlMask, XK_period,       tagmon          ),
 
+	RK(MODKEY|Mod1Mask|ControlMask, XK_period, tagallmon),
+
 	AM(XK_n, rain),
 	AM(XK_c, forest),
 
