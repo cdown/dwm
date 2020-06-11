@@ -212,7 +212,7 @@ static void restack(Monitor *m);
 static void run(void);
 static void scan(void);
 static int sendevent(Client *c, Atom proto);
-static void sendmon(Client *c, Monitor *m);
+static void sendmon(Client *c, Monitor *m, int keeptags);
 static void setclientstate(Client *c, long state);
 static void setfocus(Client *c);
 static void setfullscreen(Client *c, int fullscreen);
@@ -225,6 +225,7 @@ static void sigchld(int unused);
 static void spawn(const Arg *arg);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
+static void tagallmon(const Arg *arg);
 static void tile(Monitor *m);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
@@ -1356,7 +1357,7 @@ movemouse(const Arg *arg)
 	} while (ev.type != ButtonRelease);
 	XUngrabPointer(dpy, CurrentTime);
 	if ((m = recttomon(c->x, c->y, c->w, c->h)) != selmon) {
-		sendmon(c, m);
+		sendmon(c, m, 0);
 		selmon = m;
 		focus(NULL);
 	}
@@ -1581,7 +1582,7 @@ resizemouse(const Arg *arg)
 	XUngrabPointer(dpy, CurrentTime);
 	while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
 	if ((m = recttomon(c->x, c->y, c->w, c->h)) != selmon) {
-		sendmon(c, m);
+		sendmon(c, m, 0);
 		selmon = m;
 		focus(NULL);
 	}
@@ -1655,7 +1656,7 @@ scan(void)
 }
 
 void
-sendmon(Client *c, Monitor *m)
+sendmon(Client *c, Monitor *m, int keeptags)
 {
 	if (c->mon == m)
 		return;
@@ -1663,7 +1664,8 @@ sendmon(Client *c, Monitor *m)
 	detach(c);
 	detachstack(c);
 	c->mon = m;
-	c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
+	if (!keeptags)
+		c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
 	attachaside(c);
 	attachstack(c);
 	focus(NULL);
@@ -1917,7 +1919,19 @@ tagmon(const Arg *arg)
 {
 	if (!selmon->sel || !mons->next)
 		return;
-	sendmon(selmon->sel, dirtomon(arg->i));
+	sendmon(selmon->sel, dirtomon(arg->i), 0);
+	focusmon(arg);
+}
+
+void
+tagallmon(const Arg *arg)
+{
+	Client *c;
+
+	if (!mons->next)
+		return;
+	for (c = selmon->clients; c; c = c->next)
+		sendmon(c, dirtomon(arg->i), 1);
 	focusmon(arg);
 }
 
