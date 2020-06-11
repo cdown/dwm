@@ -12,7 +12,8 @@ in order to minimise merge conflicts, the dead code is left alone.
 
 - alwaysfullscreen (upstreamed)
 - killunsel (upstreamed)
-- resizeclient (pending upstream)
+- resetlayout (upstreamed)
+- tagallmon (not upstreamed)
 - warp v2 (not upstreamed)
 - const-correctness fixes (sent upstream, but Hiltjo said he doesn't mind about const-correctness)
 
