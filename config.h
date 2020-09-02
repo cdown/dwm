@@ -125,6 +125,7 @@ static Key keys[] = {
 	{ KeyPress,   False,              XF86XK_AudioLowerVolume, spawn,          ESHCMD("pulseaudio-ctl-xob down") },
 	{ KeyPress,   MODKEY,             XK_m,                    spawn,          ESHCMD("pulseaudio-ctl-xob mute") },
 	{ KeyPress,   False,              XF86XK_AudioMute,        spawn,          ESHCMD("pulseaudio-ctl-xob mute") },
+	{ KeyPress,   MODKEY,             XK_v,                    spawn,          ESHCMD("pulseaudio-ctl-xob noop") },
 	{ KeyPress,   MODKEY,             XK_Down,                 spawn,          ESHCMD("mpc toggle") },
 	{ KeyRelease, False,              XF86XK_AudioPause,       spawn,          ESHCMD("audiotoggle") },
 	{ KeyRelease, False,              XF86XK_AudioPlay,        spawn,          ESHCMD("audiotoggle") },
