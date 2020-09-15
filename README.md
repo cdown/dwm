@@ -23,7 +23,7 @@ in order to minimise merge conflicts, the dead code is left alone.
 - keypressrelease
 - pertag
 - push_no_master
-- zoomswap
+- zoomswap (with some modifications around focus behaviour)
 
 # Screenshot
 

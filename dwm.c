@@ -2485,7 +2485,6 @@ zoom(const Arg *arg)
 			at->next = cold;
 		}
 	}
-	focus(c);
 	arrange(c->mon);
 }
 
