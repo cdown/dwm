@@ -4,7 +4,8 @@ upstream (see the [`sync`](https://github.com/cdown/dwm/blob/master/sync)
 script).
 
 A lot of the code is unused (eg. I don't use the bar, window titles, etc.) but
-in order to minimise merge conflicts, the dead code is left alone.
+in order to minimise merge conflicts, the dead code is left alone, and we just
+rely on compiler constant folding to do dead code removal.
 
 # Patches
 
