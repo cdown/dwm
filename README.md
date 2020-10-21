@@ -22,6 +22,7 @@ rely on compiler constant folding to do dead code removal.
 
 - bottomstack
 - keypressrelease
+- gaplessgrid
 - pertag
 - push_no_master
 - zoomswap (with some modifications around focus behaviour)
