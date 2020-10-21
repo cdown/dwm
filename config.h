@@ -52,6 +52,7 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "TTT",      bstack },
+	{ "HHH",      gaplessgrid },
 };
 
 /* key definitions */
@@ -111,6 +112,7 @@ static Key keys[] = {
 	{ KeyPress,   MODKEY|ShiftMask,   XK_Return,               spawn,          ESHCMD("urxvtc -title Scratch -geometry 160x40") },
 	{ KeyPress,   MODKEY|ControlMask, XK_t,                    setlayout,      {.v = &layouts[0] } },
 	{ KeyPress,   MODKEY|ControlMask, XK_b,                    setlayout,      {.v = &layouts[2] } },
+	{ KeyPress,   MODKEY|ControlMask, XK_g,                    setlayout,      {.v = &layouts[3] } },
 	{ KeyPress,   MODKEY|ControlMask, XK_9,                    setmfact,       {.f = -0.05} },
 	{ KeyPress,   MODKEY|ControlMask, XK_0,                    setmfact,       {.f = +0.05} },
 	{ KeyPress,   MODKEY|ControlMask, XK_r,                    resetlayout,    {0} },
