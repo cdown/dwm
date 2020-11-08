@@ -57,7 +57,7 @@ static const LayoutConfigRule lc_rules[] = {
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
+	{ "|||",      col },     /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "TTT",      bstack },
 	{ "HHH",      gaplessgrid },
