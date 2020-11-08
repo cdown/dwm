@@ -13,6 +13,7 @@ rely on compiler constant folding to do dead code removal.
 
 - alwaysfullscreen (upstreamed)
 - killunsel (upstreamed)
+- layoutconfigrules (not upstreamed, can be sent once untangled from pertag/resetlayout)
 - resetlayout (upstreamed)
 - tagallmon (not upstreamed)
 - warp v2 (not upstreamed)
