@@ -22,6 +22,7 @@ rely on compiler constant folding to do dead code removal.
 ## By others
 
 - bottomstack
+- column
 - keypressrelease
 - gaplessgrid
 - pertag
