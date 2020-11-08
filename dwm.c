@@ -114,6 +114,13 @@ typedef struct {
 	void (*arrange)(Monitor *);
 } Layout;
 
+typedef struct {
+	int mw, mh;    /* >= matching */
+	int layout;    /* only apply if this is the current layout, <0 for no matching */
+	int nmaster;   /* the new nmaster to apply */
+	float mfact;   /* the new mfact to apply */
+} LayoutConfigRule;
+
 typedef struct Pertag Pertag;
 struct Monitor {
 	char ltsymbol[16];
@@ -240,6 +247,7 @@ static void updatebarpos(Monitor *m);
 static void updatebars(void);
 static void updateclientlist(void);
 static int updategeom(void);
+static void updatelcrule(void);
 static void updatenumlockmask(void);
 static void updatesizehints(Client *c);
 static void updatestatus(void);
@@ -682,6 +690,7 @@ configurenotify(XEvent *e)
 			}
 			focus(NULL);
 			arrange(NULL);
+			updatelcrule();
 		}
 	}
 }
@@ -1541,10 +1550,9 @@ void
 resetlayout(const Arg *arg)
 {
 	Arg default_layout = {.v = &layouts[0]};
-	Arg default_mfact = {.f = mfact + 1};
 
 	setlayout(&default_layout);
-	setmfact(&default_mfact);
+	updatelcrule();
 }
 
 void
@@ -1803,6 +1811,14 @@ setlayout(const Arg *arg)
 		arrange(selmon);
 	else
 		drawbar(selmon);
+	updatelcrule();
+}
+
+void
+setnmaster(const Arg *arg)
+{
+	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag] = arg->i;
+	arrange(selmon);
 }
 
 /* arg > 1.0 will set mfact absolutely */
@@ -1889,6 +1905,7 @@ setup(void)
 	XSelectInput(dpy, root, wa.event_mask);
 	grabkeys();
 	focus(NULL);
+	updatelcrule();
 }
 
 
@@ -2255,6 +2272,35 @@ updategeom(void)
 		selmon = wintomon(root);
 	}
 	return dirty;
+}
+
+void
+updatelcrule(void)
+{
+	size_t i;
+	const LayoutConfigRule *lr;
+	Arg default_mfact = {.f = mfact + 1};
+	Arg default_nmaster = {.i = nmaster};
+
+	for (i = 0; i < LENGTH(lc_rules); i++) {
+		lr = &lc_rules[i];
+
+		if (selmon->mw >= lr->mw &&
+		    selmon->mh >= lr->mh &&
+		    selmon->lt[selmon->sellt] == &layouts[lr->layout])
+		{
+			Arg new_mfact = {.f = lr->mfact + 1};
+			Arg new_nmaster = {.i = lr->nmaster};
+
+			setmfact(&new_mfact);
+			setnmaster(&new_nmaster);
+			return;
+		}
+	}
+
+	/* no rules matched, bring us back to default mfact/nmaster */
+	setmfact(&default_mfact);
+	setnmaster(&default_nmaster);
 }
 
 void
