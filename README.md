@@ -12,12 +12,13 @@ rely on compiler constant folding to do dead code removal.
 ## Written by me
 
 - alwaysfullscreen (upstreamed)
+- const-correctness fixes (sent upstream, but Hiltjo said he doesn't mind about const-correctness)
 - killunsel (upstreamed)
 - layoutconfigrules (not upstreamed, can be sent once untangled from pertag/resetlayout)
+- mousefocusondestroy (not upstreamed)
 - resetlayout (upstreamed)
 - tagallmon (not upstreamed)
 - warp v2 (not upstreamed)
-- const-correctness fixes (sent upstream, but Hiltjo said he doesn't mind about const-correctness)
 
 ## By others
 
