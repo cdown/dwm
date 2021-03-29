@@ -63,8 +63,7 @@ enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
 enum { SchemeNorm, SchemeSel }; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
-       NetWMWindowTypeDialog, NetWMWindowTypeNotification, NetClientList,
-       NetLast }; /* EWMH atoms */
+       NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
 enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
 enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
        ClkClientWin, ClkRootWin, ClkLast }; /* clicks */
@@ -209,9 +208,9 @@ static Client *nexttiled(Client *c);
 static void pop(Client *c);
 static Client *prevtiled(Client *c);
 static void propertynotify(XEvent *e);
-static void pushdown(const Arg *arg);
+static Client *pushdown(const Arg *arg);
 static void pushstack(const Arg *arg);
-static void pushup(const Arg *arg);
+static Client *pushup(const Arg *arg);
 static void quit(const Arg *arg);
 static Monitor *recttomon(int x, int y, int w, int h);
 static void resetlayout(const Arg *arg);
@@ -1011,7 +1010,6 @@ focusmon(const Arg *arg)
 	unfocus(selmon->sel, 0);
 	selmon = m;
 	focus(NULL);
-	warp(selmon->sel);
 }
 
 void
@@ -1037,6 +1035,7 @@ focusstack(const Arg *arg)
 	if (c) {
 		focus(c);
 		restack(selmon);
+		warp(c);
 	}
 }
 
@@ -1353,6 +1352,8 @@ maprequest(XEvent *e)
 		return;
 	if (!wintoclient(ev->window))
 		manage(ev->window, &wa);
+
+	warp(wintoclient(ev->window));
 }
 
 void
@@ -1520,12 +1521,12 @@ propertynotify(XEvent *e)
 	}
 }
 
-void
+Client *
 pushdown(const Arg *arg) {
 	Client *sel = selmon->sel, *c;
 
 	if(!sel || sel->isfloating || sel == nexttiled(selmon->clients))
-		return;
+		return NULL;
 	if((c = nexttiled(sel->next))) {
 		detach(sel);
 		sel->next = c->next;
@@ -1533,22 +1534,27 @@ pushdown(const Arg *arg) {
 	}
 	focus(sel);
 	arrange(selmon);
+	return sel;
 }
 
 void
 pushstack(const Arg *arg) {
-    if(arg->i > 0)
-        pushdown(arg);
-    else
-        pushup(arg);
+	Client *sel;
+
+	if(arg->i > 0)
+		sel = pushdown(arg);
+	else
+		sel = pushup(arg);
+
+	warp(sel);
 }
 
-void
+Client *
 pushup(const Arg *arg) {
 	Client *sel = selmon->sel, *c;
 
 	if(!sel || sel->isfloating)
-		return;
+		return NULL;
 	if((c = prevtiled(sel)) && c != nexttiled(selmon->clients)) {
 		detach(sel);
 		sel->next = c;
@@ -1557,6 +1563,7 @@ pushup(const Arg *arg) {
 	}
 	focus(sel);
 	arrange(selmon);
+	return sel;
 }
 
 void
@@ -1694,8 +1701,6 @@ restack(Monitor *m)
 	}
 	XSync(dpy, False);
 	while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
-	if (m == selmon && (m->tagset[m->seltags] & m->sel->tags) && selmon->lt[selmon->sellt] != &layouts[2])
-		warp(m->sel);
 }
 
 void
@@ -1911,7 +1916,6 @@ setup(void)
 	netatom[NetWMFullscreen] = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", False);
 	netatom[NetWMWindowType] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE", False);
 	netatom[NetWMWindowTypeDialog] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE_DIALOG", False);
-	netatom[NetWMWindowTypeNotification] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE_NOTIFICATION", False);
 	netatom[NetClientList] = XInternAtom(dpy, "_NET_CLIENT_LIST", False);
 	/* init cursors */
 	cursor[CurNormal] = drw_cur_create(drw, XC_left_ptr);
@@ -2009,7 +2013,6 @@ tag(const Arg *arg)
 	if (selmon->sel && arg->ui & TAGMASK) {
 		selmon->sel->tags = arg->ui & TAGMASK;
 		view(arg);
-		warp(nexttiled(selmon->clients));
 	}
 }
 
@@ -2097,6 +2100,7 @@ toggletag(const Arg *arg)
 		selmon->sel->tags = newtags;
 		focus(NULL);
 		arrange(selmon);
+		warp(NULL);
 	}
 }
 
@@ -2480,6 +2484,7 @@ view(const Arg *arg)
 		togglebar(NULL);
 	focus(NULL);
 	arrange(selmon);
+	warp(NULL);
 }
 
 void
@@ -2487,15 +2492,12 @@ warp(Client *c)
 {
 	int x, y;
 
+	fprintf(stderr, "warping %p\n", (void *)c);
+
 	if (!c) {
 		XWarpPointer(dpy, None, root, 0, 0, 0, 0, selmon->wx + selmon->ww/2, selmon->wy + selmon->wh/2);
 		return;
 	}
-
-	Atom wtype = getatomprop(c, netatom[NetWMWindowType]);
-	if (wtype == netatom[NetWMWindowTypeDialog] ||
-	    wtype == netatom[NetWMWindowTypeNotification])
-		return;
 
 	if (!getrootptr(&x, &y) ||
 	    (x > c->x &&
