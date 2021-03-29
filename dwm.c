@@ -2492,8 +2492,11 @@ warp(Client *c)
 {
 	int x, y;
 
-	fprintf(stderr, "warping %p\n", (void *)c);
+	/* Try to warp to the active window. */
+	if (!c)
+		c = selmon->sel;
 
+	/* If there's no active window, just warp to the middle of the screen. */
 	if (!c) {
 		XWarpPointer(dpy, None, root, 0, 0, 0, 0, selmon->wx + selmon->ww/2, selmon->wy + selmon->wh/2);
 		return;
