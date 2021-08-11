@@ -11,12 +11,12 @@ rely on compiler constant folding to do dead code removal.
 
 ## Written by me
 
-- alwaysfullscreen (upstreamed)
-- const-correctness fixes (sent upstream, but Hiltjo said he doesn't mind about const-correctness)
-- destroyfocus (upstreamed)
-- killunsel (upstreamed)
-- layoutconfigrules (not upstreamed, can be sent once untangled from pertag/resetlayout)
-- resetlayout (upstreamed)
+- alwaysfullscreen ([merged into core dwm](https://git.suckless.org/dwm/commit/67d76bdc68102df976177de351f65329d8683064.html))
+- const-correctness fixes (not upstreamed)
+- destroyfocus ([upstreamed](https://dwm.suckless.org/patches/destroyfocus/))
+- killunsel ([upstreamed](https://dwm.suckless.org/patches/killunsel/))
+- layoutconfigrules (not upstreamed)
+- resetlayout ([upstreamed](https://dwm.suckless.org/patches/resetlayout/))
 - tagallmon (not upstreamed)
 - warp v2 (not upstreamed)
 
