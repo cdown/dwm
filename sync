@@ -14,5 +14,5 @@ if [[ "$old_base" == "$new_base" ]]; then
 else
     # back up, since we are rewriting history
     git branch "$(date +%Y%m%d%H%M%S%N)"
-    git rebase -r suckless/master
+    git rebase --committer-date-is-author-date -r suckless/master
 fi
