@@ -5,7 +5,7 @@ script).
 
 A lot of the code is unused (eg. I don't use the bar, window titles, etc.) but
 in order to minimise merge conflicts, the dead code is left alone, and we just
-rely on compiler constant folding to do dead code removal.
+rely on compiler code elimination to do dead code removal.
 
 # Patches
 
