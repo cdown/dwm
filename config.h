@@ -45,6 +45,7 @@ static const Rule rules[] = {
 static const float mfact     = 0.5;  /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
+static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const LayoutConfigRule lc_rules[] = {
 	/* Uses default nmaster/mfact
