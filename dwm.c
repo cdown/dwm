@@ -1869,13 +1869,6 @@ setlayout(const Arg *arg)
 	updatelcrule();
 }
 
-void
-setnmaster(const Arg *arg)
-{
-	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag] = arg->i;
-	arrange(selmon);
-}
-
 /* arg > 1.0 will set mfact absolutely */
 void
 setmfact(const Arg *arg)
@@ -2336,10 +2329,8 @@ updategeom(void)
 void
 updatelcrule(void)
 {
-	size_t i;
+	size_t i, t;
 	const LayoutConfigRule *lr;
-	Arg default_mfact = {.f = mfact + 1};
-	Arg default_nmaster = {.i = nmaster};
 
 	for (i = 0; i < LENGTH(lc_rules); i++) {
 		lr = &lc_rules[i];
@@ -2348,18 +2339,25 @@ updatelcrule(void)
 		    selmon->mh >= lr->mh &&
 		    selmon->lt[selmon->sellt] == &layouts[lr->layout])
 		{
-			Arg new_mfact = {.f = lr->mfact + 1};
-			Arg new_nmaster = {.i = lr->nmaster};
-
-			setmfact(&new_mfact);
-			setnmaster(&new_nmaster);
+			for (t = 0; t <= LENGTH(tags); t++) {
+				selmon->pertag->mfacts[t] = lr->mfact;
+				selmon->pertag->nmasters[t] = lr->nmaster;
+			}
+			selmon->mfact = lr->mfact;
+			selmon->nmaster = lr->nmaster;
+			arrange(selmon);
 			return;
 		}
 	}
 
 	/* no rules matched, bring us back to default mfact/nmaster */
-	setmfact(&default_mfact);
-	setnmaster(&default_nmaster);
+	for (t = 0; t <= LENGTH(tags); t++) {
+		selmon->pertag->mfacts[t] = mfact;
+		selmon->pertag->nmasters[t] = nmaster;
+	}
+	selmon->mfact = mfact;
+	selmon->nmaster = nmaster;
+	arrange(selmon);
 }
 
 void
