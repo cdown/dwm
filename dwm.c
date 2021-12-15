@@ -1609,7 +1609,6 @@ resetlayout(const Arg *arg)
 	Arg default_layout = {.v = &layouts[0]};
 
 	setlayout(&default_layout);
-	updatelcrule();
 }
 
 void
