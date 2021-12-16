@@ -15,7 +15,7 @@ rely on compiler code elimination to do dead code removal.
 - const-correctness fixes (not upstreamed)
 - destroyfocus ([upstreamed](https://dwm.suckless.org/patches/destroyfocus/))
 - killunsel ([upstreamed](https://dwm.suckless.org/patches/killunsel/))
-- layoutconfigrules (not upstreamed)
+- layoutmonitorrules ([upstreamed](https://dwm.suckless.org/patches/layoutmonitorrules/))
 - resetlayout ([upstreamed](https://dwm.suckless.org/patches/resetlayout/))
 - tagallmon (not upstreamed)
 - warp v2 (not upstreamed)
