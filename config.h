@@ -47,13 +47,10 @@ static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
-static const LayoutConfigRule lc_rules[] = {
-	/* Uses default nmaster/mfact
-	 *
-	 * >=w, >=h, req'd layout, new nmaster, new mfact */
+static const LayoutMonitorRule lm_rules[] = {
+	/* >=w, >=h, req'd layout, new nmaster, new mfact */
 	{ 3000, 0,   0,            2,           0.66 },
 };
-
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */

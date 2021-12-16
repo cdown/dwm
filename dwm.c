@@ -116,7 +116,7 @@ typedef struct {
 	int layout;    /* only apply if this is the current layout, <0 for no matching */
 	int nmaster;   /* the new nmaster to apply */
 	float mfact;   /* the new mfact to apply */
-} LayoutConfigRule;
+} LayoutMonitorRule;
 
 typedef struct Pertag Pertag;
 struct Monitor {
@@ -152,6 +152,7 @@ typedef struct {
 } Rule;
 
 /* function declarations */
+static void applylmrules(void);
 static void applyrules(Client *c);
 static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact);
 static void arrange(Monitor *m);
@@ -245,7 +246,6 @@ static void updatebarpos(Monitor *m);
 static void updatebars(void);
 static void updateclientlist(void);
 static int updategeom(void);
-static void updatelcrule(void);
 static void updatenumlockmask(void);
 static void updatesizehints(Client *c);
 static void updatestatus(void);
@@ -314,6 +314,39 @@ struct Pertag {
 struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
 
 /* function implementations */
+void
+applylmrules(void)
+{
+	size_t t;
+
+	for (t = 0; t <= LENGTH(tags); t++) {
+		float new_mfact = mfact;
+		int new_nmaster = nmaster;
+		size_t i;
+
+		for (i = 0; i < LENGTH(lm_rules); i++) {
+			const LayoutMonitorRule *lmr = &lm_rules[i];
+
+			if (selmon->mw >= lmr->mw &&
+			    selmon->mh >= lmr->mh &&
+			    selmon->lt[selmon->pertag->sellts[t]] == &layouts[lmr->layout])
+			{
+				new_mfact = lmr->mfact;
+				new_nmaster = lmr->nmaster;
+				break;
+			}
+		}
+
+		selmon->pertag->mfacts[t] = new_mfact;
+		selmon->pertag->nmasters[t] = new_nmaster;
+
+	}
+
+	selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag];
+	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag];
+	arrange(selmon);
+}
+
 void
 applyrules(Client *c)
 {
@@ -717,7 +750,7 @@ configurenotify(XEvent *e)
 			}
 			focus(NULL);
 			arrange(NULL);
-			updatelcrule();
+			applylmrules();
 		}
 	}
 }
@@ -1606,6 +1639,7 @@ resetlayout(const Arg *arg)
 	Arg default_layout = {.v = &layouts[0]};
 
 	setlayout(&default_layout);
+	applylmrules();
 }
 
 void
@@ -1856,11 +1890,9 @@ setlayout(const Arg *arg)
 		selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (const Layout *)arg->v;
 	selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt];
 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof selmon->ltsymbol);
-	if (selmon->sel)
-		arrange(selmon);
-	else
+	applylmrules();
+	if (!selmon->sel)
 		drawbar(selmon);
-	updatelcrule();
 }
 
 /* arg > 1.0 will set mfact absolutely */
@@ -1953,7 +1985,7 @@ setup(void)
 	XSelectInput(dpy, root, wa.event_mask);
 	grabkeys();
 	focus(NULL);
-	updatelcrule();
+	applylmrules();
 }
 
 void
@@ -2317,40 +2349,6 @@ updategeom(void)
 		selmon = wintomon(root);
 	}
 	return dirty;
-}
-
-void
-updatelcrule(void)
-{
-	size_t i, t;
-	const LayoutConfigRule *lr;
-
-	for (i = 0; i < LENGTH(lc_rules); i++) {
-		lr = &lc_rules[i];
-
-		if (selmon->mw >= lr->mw &&
-		    selmon->mh >= lr->mh &&
-		    selmon->lt[selmon->sellt] == &layouts[lr->layout])
-		{
-			for (t = 0; t <= LENGTH(tags); t++) {
-				selmon->pertag->mfacts[t] = lr->mfact;
-				selmon->pertag->nmasters[t] = lr->nmaster;
-			}
-			selmon->mfact = lr->mfact;
-			selmon->nmaster = lr->nmaster;
-			arrange(selmon);
-			return;
-		}
-	}
-
-	/* no rules matched, bring us back to default mfact/nmaster */
-	for (t = 0; t <= LENGTH(tags); t++) {
-		selmon->pertag->mfacts[t] = mfact;
-		selmon->pertag->nmasters[t] = nmaster;
-	}
-	selmon->mfact = mfact;
-	selmon->nmaster = nmaster;
-	arrange(selmon);
 }
 
 void
