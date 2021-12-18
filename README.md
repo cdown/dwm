@@ -1,7 +1,7 @@
-This is my personal fork of dwm. There are a non-trivial amount of
-changes/refactors to core dwm code, but I do keep the changes in sync with
-upstream (see the [`sync`](https://github.com/cdown/dwm/blob/master/sync)
-script).
+This is dwm with a number of improvements, many of which have been contributed
+upstream. There are a non-trivial amount of changes/refactors to core dwm code,
+but I do keep the changes in sync with upstream (see the
+[`sync`](https://github.com/cdown/dwm/blob/master/sync) script).
 
 A lot of the code is unused (eg. I don't use the bar, window titles, etc.) but
 in order to minimise merge conflicts, the dead code is left alone, and we just
