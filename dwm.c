@@ -1369,6 +1369,7 @@ manage(Window w, XWindowAttributes *wa)
 	arrange(c->mon);
 	XMapWindow(dpy, c->win);
 	focus(NULL);
+	warp(c);
 }
 
 void
@@ -1393,8 +1394,6 @@ maprequest(XEvent *e)
 		return;
 	if (!wintoclient(ev->window))
 		manage(ev->window, &wa);
-
-	warp(wintoclient(ev->window));
 }
 
 void
