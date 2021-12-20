@@ -1783,6 +1783,11 @@ scan(void)
 		if (wins)
 			XFree(wins);
 	}
+
+	/* We may have last run manage() on a window that isn't visible. To be
+	 * deterministic on startup, place focus/warp on current master if any
+	 * client exists. */
+	warp(nexttiled(selmon->clients));
 }
 
 void
