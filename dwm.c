@@ -2209,9 +2209,9 @@ unmanage(Client *c, int destroyed)
 		XUngrabServer(dpy);
 	}
 	free(c);
-	focus(getclientundermouse());
 	updateclientlist();
 	arrange(m);
+	focus(getclientundermouse());
 }
 
 void
