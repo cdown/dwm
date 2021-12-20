@@ -2606,6 +2606,10 @@ zoom(const Arg *arg)
 		}
 	}
 	arrange(c->mon);
+	if (cprevious)
+		warp(cold);
+	else
+		warp(c);
 }
 
 int
