@@ -1853,6 +1853,7 @@ setlayout(const Arg *arg)
 	applylmrules();
 	if (!selmon->sel)
 		drawbar(selmon);
+	warp(selmon->sel);
 }
 
 /* arg > 1.0 will set mfact absolutely */
