@@ -160,7 +160,7 @@ static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interac
 static void arrange(Monitor *m);
 static void arrangemon(Monitor *m);
 static void attach(Client *c);
-static void attachaside(Client *c);
+static void attachtop(Client *c);
 static void attachstack(Client *c);
 static void bstack(Monitor *m);
 static void buttonpress(XEvent *e);
@@ -205,7 +205,6 @@ static void monocle(Monitor *m);
 static void motionnotify(XEvent *e);
 static void movemouse(const Arg *arg);
 static void movestack(const Arg *arg);
-static Client *nexttagged(Client *c);
 static Client *nexttiled(Client *c);
 static void pop(Client *c);
 static Client *prevtiled(Client *c);
@@ -480,14 +479,22 @@ attach(Client *c)
 }
 
 void
-attachaside(Client *c) {
-	Client *at = nexttagged(c);
-	if(!at) {
-		attach(c);
-		return;
+attachtop(Client *c)
+{
+	int n;
+	Monitor *m = selmon;
+	Client *below;
+
+	for (n = 1, below = c->mon->clients;
+		below && below->next && (below->isfloating || !ISVISIBLEONTAG(below, c->tags) || n != m->nmaster);
+		n = below->isfloating || !ISVISIBLEONTAG(below, c->tags) ? n + 0 : n + 1, below = below->next);
+	c->next = NULL;
+	if (below) {
+		c->next = below->next;
+		below->next = c;
 	}
-	c->next = at->next;
-	at->next = c;
+	else
+		c->mon->clients = c;
 }
 
 void
@@ -1320,7 +1327,7 @@ manage(Window w, XWindowAttributes *wa)
 		c->isfloating = c->oldstate = trans != None || c->isfixed;
 	if (c->isfloating)
 		XRaiseWindow(dpy, c->win);
-	attachaside(c);
+	attachtop(c);
 	attachstack(c);
 	XChangeProperty(dpy, root, netatom[NetClientList], XA_WINDOW, 32, PropModeAppend,
 		(unsigned char *) &(c->win), 1);
@@ -1498,16 +1505,6 @@ movestack(const Arg *arg) {
 	}
 
 	warp(selmon->sel);
-}
-
-Client *
-nexttagged(Client *c) {
-	Client *walked = c->mon->clients;
-	for(;
-		walked && (walked->isfloating || !ISVISIBLEONTAG(walked, c->tags));
-		walked = walked->next
-	);
-	return walked;
 }
 
 Client *
@@ -1764,7 +1761,7 @@ sendmon(Client *c, Monitor *m, int keeptags)
 	c->mon = m;
 	if (!keeptags)
 		c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
-	attachaside(c);
+	attachtop(c);
 	attachstack(c);
 	focus(NULL);
 	arrange(NULL);
@@ -2290,7 +2287,7 @@ updategeom(void)
 				m->clients = c->next;
 				detachstack(c);
 				c->mon = mons;
-				attachaside(c);
+				attachtop(c);
 				attachstack(c);
 			}
 			if (m == selmon)
