@@ -11,13 +11,13 @@ rely on compiler code elimination to do dead code removal.
 
 ## Written by me
 
-- alwaysfullscreen ([merged into core dwm](https://git.suckless.org/dwm/commit/67d76bdc68102df976177de351f65329d8683064.html))
-- barperf ([merged into core dwm](https://git.suckless.org/dwm/commit/8657affa2a61e85ca8df76b62e43cb02897d1d80.html))
+- alwaysfullscreen ([merged into dwm itself](https://git.suckless.org/dwm/commit/67d76bdc68102df976177de351f65329d8683064.html))
+- barperf ([merged into dwm itself](https://git.suckless.org/dwm/commit/8657affa2a61e85ca8df76b62e43cb02897d1d80.html))
 - const-correctness fixes (not upstreamed)
-- destroyfocus ([upstreamed](https://dwm.suckless.org/patches/destroyfocus/))
-- killunsel ([upstreamed](https://dwm.suckless.org/patches/killunsel/))
-- layoutmonitorrules ([upstreamed](https://dwm.suckless.org/patches/layoutmonitorrules/))
-- resetlayout ([upstreamed](https://dwm.suckless.org/patches/resetlayout/))
+- destroyfocus ([patch](https://dwm.suckless.org/patches/destroyfocus/))
+- killunsel ([patch](https://dwm.suckless.org/patches/killunsel/))
+- layoutmonitorrules ([patch](https://dwm.suckless.org/patches/layoutmonitorrules/))
+- resetlayout ([patch](https://dwm.suckless.org/patches/resetlayout/))
 - tagallmon (not upstreamed)
 - warp v2 (not upstreamed)
 
@@ -25,10 +25,10 @@ rely on compiler code elimination to do dead code removal.
 
 - bottomstack
 - column
-- keypressrelease
 - gaplessgrid
+- keypressrelease
+- movestack
 - pertag
-- push_no_master
 - zoomswap (with some modifications around focus behaviour)
 
 # Screenshot
