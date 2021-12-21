@@ -99,7 +99,7 @@ static Key keys[] = {
 	TK(                    XK_semicolon,    5               ),
 	TK(                    XK_apostrophe,   6               ),
 	RK(MODKEY,             XK_comma,        focusstack      ),
-	RK(MODKEY|ControlMask, XK_comma,        pushstack       ),
+	RK(MODKEY|ControlMask, XK_comma,        movestack       ),
 	RK(MODKEY,             XK_period,       focusmon        ),
 	RK(MODKEY|ControlMask, XK_period,       tagmon          ),
 
