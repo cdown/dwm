@@ -17,6 +17,7 @@ rely on compiler code elimination to do dead code removal.
 - destroyfocus ([patch](https://dwm.suckless.org/patches/destroyfocus/))
 - killunsel ([patch](https://dwm.suckless.org/patches/killunsel/))
 - layoutmonitorrules ([patch](https://dwm.suckless.org/patches/layoutmonitorrules/))
+- noborderflicker ([patch](https://dwm.suckless.org/patches/noborderflicker/))
 - resetlayout ([patch](https://dwm.suckless.org/patches/resetlayout/))
 - tagallmon (not upstreamed)
 - warp v2 (not upstreamed)
