@@ -975,7 +975,8 @@ focus(Client *c)
 		grabbuttons(c, 1);
 		/* set new focused border first to avoid flickering */
 		XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
-		if (lastfocused)
+		/* lastfocused may be us if another window was unmanaged */
+		if (lastfocused && lastfocused != c)
 			XSetWindowBorder(dpy, lastfocused->win, scheme[SchemeNorm][ColBorder].pixel);
 		setfocus(c);
 	} else {
