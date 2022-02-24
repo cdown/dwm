@@ -102,6 +102,7 @@ static Key keys[] = {
 	RK(MODKEY|ControlMask, XK_comma,        movestack       ),
 	RK(MODKEY,             XK_period,       focusmon        ),
 	RK(MODKEY|ControlMask, XK_period,       tagmon          ),
+	RK(MODKEY|ControlMask, XK_n,            incnmaster      ),
 
 	RK(MODKEY|Mod1Mask|ControlMask, XK_period, tagallmon),
 
