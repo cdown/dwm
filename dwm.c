@@ -1511,7 +1511,7 @@ movestack(const Arg *arg) {
 		arrange(selmon);
 	}
 
-	warp(selmon->sel);
+	warp(NULL);
 }
 
 Client *
@@ -1859,7 +1859,7 @@ setlayout(const Arg *arg)
 	applylmrules();
 	if (!selmon->sel)
 		drawbar(selmon);
-	warp(selmon->sel);
+	warp(NULL);
 }
 
 /* arg > 1.0 will set mfact absolutely */
