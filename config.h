@@ -37,6 +37,7 @@ static const Rule rules[] = {
 	{ NULL,       NULL,       "Scratch",  0,            True,       True,        -1 },
 	{ NULL,       NULL,       "mail",     1 << 3,       False,      False,       -1 },
 	{ NULL,       NULL,       "irc",      1 << 2,       False,      False,       -1 },
+	{ NULL,       NULL,       "mattermost",  1 << 2,    False,      False,       -1 },
 	{ NULL,       NULL,       pp_moni,    0,            False,      True,       2  },
 	{ NULL,       NULL,       pp_proj,    0,            False,      True,       1  },
 };
