@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -150,6 +151,7 @@ typedef struct {
 	unsigned int tags;
 	int iscentered;
 	int isfloating;
+	int respectperiod;
 	int monitor;
 } Rule;
 
@@ -165,6 +167,7 @@ static void attachstack(Client *c);
 static void bstack(Monitor *m);
 static void buttonpress(XEvent *e);
 static void checkotherwm(void);
+static int checkruleperiod(void);
 static void cleanup(void);
 static void cleanupmon(Monitor *mon);
 static void clientmessage(XEvent *e);
@@ -295,6 +298,7 @@ static Display *dpy;
 static Drw *drw;
 static Monitor *mons, *selmon;
 static Window root, wmcheckwin;
+struct timespec starttime;
 
 /* configuration, allows nested code to access above variables */
 #include "config.h"
@@ -365,7 +369,8 @@ applyrules(Client *c)
 		r = &rules[i];
 		if ((!r->title || strstr(c->name, r->title))
 		&& (!r->class || strstr(class, r->class))
-		&& (!r->instance || strstr(instance, r->instance)))
+		&& (!r->instance || strstr(instance, r->instance))
+		&& (!r->respectperiod || checkruleperiod()))
 		{
 			c->iscentered = r->iscentered;
 			c->isfloating = r->isfloating;
@@ -588,6 +593,19 @@ checkotherwm(void)
 	XSync(dpy, False);
 	XSetErrorHandler(xerror);
 	XSync(dpy, False);
+}
+
+int
+checkruleperiod(void)
+{
+	struct timespec now;
+
+	if (clock_gettime(CLOCK_MONOTONIC, &now)) {
+		perror("clock_gettime");
+		return 0;
+	}
+
+	return now.tv_sec - starttime.tv_sec <= ruleperiod;
 }
 
 void
@@ -1892,6 +1910,11 @@ setup(void)
 
 	/* clean up any zombies (inherited from .xinitrc etc) immediately */
 	while (waitpid(-1, NULL, WNOHANG) > 0);
+
+	if (clock_gettime(CLOCK_MONOTONIC, &starttime)) {
+		perror("clock_gettime");
+		exit(EXIT_FAILURE);
+	}
 
 	/* init screen */
 	screen = DefaultScreen(dpy);
