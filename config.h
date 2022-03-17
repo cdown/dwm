@@ -40,6 +40,7 @@ static const Rule rules[] = {
 	{ NULL,       NULL,       "mattermost",  1 << 2,    False,      False,      True,          -1 },
 	{ NULL,       NULL,       pp_moni,    0,            False,      True,       False,         2  },
 	{ NULL,       NULL,       pp_proj,    0,            False,      True,       False,         1  },
+	{ NULL,       "google-chrome", NULL,  1 << 1,       False,      False,      True,          -1 },
 };
 static const int ruleperiod = 5; /* number of seconds before rules are ignored */
 
