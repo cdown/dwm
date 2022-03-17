@@ -598,14 +598,18 @@ checkotherwm(void)
 int
 checkruleperiod(void)
 {
+	static int inruleperiod = 1;
 	struct timespec now;
+
+	if (!inruleperiod)
+		return inruleperiod;
 
 	if (clock_gettime(CLOCK_MONOTONIC, &now)) {
 		perror("clock_gettime");
 		return 0;
 	}
 
-	return now.tv_sec - starttime.tv_sec <= ruleperiod;
+	return (inruleperiod = now.tv_sec - starttime.tv_sec <= ruleperiod);
 }
 
 void
