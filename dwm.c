@@ -1363,7 +1363,8 @@ manage(Window w, XWindowAttributes *wa)
 	arrange(c->mon);
 	XMapWindow(dpy, c->win);
 	focus(NULL);
-	warp(c);
+	if (ISVISIBLE(c))
+		warp(c);
 }
 
 void
