@@ -33,14 +33,15 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     iscentered  isfloating   monitor */
-	{ NULL,       NULL,       "Scratch",  0,            True,       True,        -1 },
-	{ NULL,       NULL,       "mail",     1 << 3,       False,      False,       -1 },
-	{ NULL,       NULL,       "irc",      1 << 2,       False,      False,       -1 },
-	{ NULL,       NULL,       "mattermost",  1 << 2,    False,      False,       -1 },
-	{ NULL,       NULL,       pp_moni,    0,            False,      True,       2  },
-	{ NULL,       NULL,       pp_proj,    0,            False,      True,       1  },
+	/* class      instance    title       tags mask     iscentered  isfloating  respectperiod  monitor */
+	{ NULL,       NULL,       "Scratch",  0,            True,       True,       False,         -1 },
+	{ NULL,       NULL,       "mail",     1 << 3,       False,      False,      True,          -1 },
+	{ NULL,       NULL,       "irc",      1 << 2,       False,      False,      True,          -1 },
+	{ NULL,       NULL,       "mattermost",  1 << 2,    False,      False,      True,          -1 },
+	{ NULL,       NULL,       pp_moni,    0,            False,      True,       False,         2  },
+	{ NULL,       NULL,       pp_proj,    0,            False,      True,       False,         1  },
 };
+static const int ruleperiod = 5; /* number of seconds before rules are ignored */
 
 /* layout(s) */
 static const float mfact     = 0.5;  /* factor of master area size [0.05..0.95] */
