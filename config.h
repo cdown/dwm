@@ -52,7 +52,7 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const LayoutMonitorRule lm_rules[] = {
 	/* >=w, >=h, req'd layout, new nmaster, new mfact */
-	{ 3000, 0,   0,            2,           0.66666 },
+	{ 3000, 0,   0,            2,           2/3.0 },
 };
 
 static const Layout layouts[] = {
