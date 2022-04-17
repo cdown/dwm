@@ -30,6 +30,7 @@ rely on compiler code elimination to do dead code removal.
 - gaplessgrid
 - keypressrelease
 - movestack
+- noborder (floating fix)
 - pertag
 - zoomswap (with some modifications around focus behaviour)
 
