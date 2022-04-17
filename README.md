@@ -18,8 +18,9 @@ rely on compiler code elimination to do dead code removal.
 - killunsel ([patch](https://dwm.suckless.org/patches/killunsel/))
 - layoutmonitorrules ([patch](https://dwm.suckless.org/patches/layoutmonitorrules/))
 - noborderflicker ([patch](https://dwm.suckless.org/patches/noborderflicker/))
-- ruleperiod (not upstreamed)
 - resetlayout ([patch](https://dwm.suckless.org/patches/resetlayout/))
+- ruleperiod (not upstreamed)
+- sizehintperf ([merged into dwm itself](https://git.suckless.org/dwm/commit/8806b6e2379372900e3d9e0bf6604bc7f727350b.html))
 - tagallmon (not upstreamed)
 - warp v2 (not upstreamed)
 
