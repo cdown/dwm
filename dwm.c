@@ -238,7 +238,6 @@ static void setup(void);
 static void seturgent(Client *c, int urg);
 static int shouldgrabkey(Client *c, Key key);
 static void showhide(Client *c);
-static void sigchld(int unused);
 static int solitary(Client *c);
 static void spawn(const Arg *arg);
 static void tag(const Arg *arg);
@@ -1924,11 +1923,23 @@ void
 setup(void)
 {
 	int i;
+	sigset_t sigmask, oldsigmask;
 	XSetWindowAttributes wa;
 	Atom utf8string;
+	const struct sigaction sc = {
+		.sa_handler = SIG_DFL,
+		.sa_flags = SA_RESTART | SA_NOCLDWAIT | SA_NOCLDSTOP,
+	};
 
-	/* clean up any zombies immediately */
-	sigchld(0);
+	sigfillset(&sigmask);
+	sigprocmask(SIG_SETMASK, &sigmask, &oldsigmask);
+
+	if (sigaction(SIGCHLD, &sc, NULL) < 0)
+		die("sigaction failed:");
+	/* for zombies inherited before SA_NOCLDWAIT from .xinitrc, etc */
+	while (waitpid(-1, NULL, WNOHANG) > 0);
+
+	sigprocmask(SIG_SETMASK, &oldsigmask, NULL);
 
 	if (clock_gettime(CLOCK_MONOTONIC, &starttime)) {
 		perror("clock_gettime");
@@ -2046,14 +2057,6 @@ showhide(Client *c)
 		showhide(c->snext);
 		XMoveWindow(dpy, c->win, WIDTH(c) * -2, c->y);
 	}
-}
-
-void
-sigchld(int unused)
-{
-	if (signal(SIGCHLD, sigchld) == SIG_ERR)
-		die("can't install SIGCHLD handler:");
-	while (0 < waitpid(-1, NULL, WNOHANG));
 }
 
 int
