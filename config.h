@@ -153,6 +153,7 @@ static Key keys[] = {
 	{ KeyRelease, MODKEY,             XK_F10,                  spawn,          ESHCMD("screenshot --all") },
 	{ KeyRelease, False,              XK_F10,                  spawn,          ESHCMD("screenshot --select") },
 	{ KeyPress,   MODKEY,             XK_Delete,               spawn,          ESHCMD("lockphyslock") },
+	{ KeyPress,   MODKEY,             XK_t,                    spawn,          ESHCMD("trello-popup") },
 	{ KeyPress,   MODKEY,             XK_d,                    spawn,          ESHCMD("notify-send \"$(world-tz)\"") },
 	{ KeyPress,   MODKEY,             XK_f,                    spawn,          ESHCMD("notify-send \"$(bats)\"") },
 	{ KeyPress,   MODKEY,             XK_s,                    spawn,          ESHCMD("xinput-toggle -r yubikey -n -e -t 10") },
