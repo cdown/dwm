@@ -153,6 +153,12 @@ typedef struct {
 	int monitor;
 } Rule;
 
+typedef struct {
+	const char *title;
+	unsigned int mod;
+	KeySym keysym;
+} KeyRule;
+
 /* function declarations */
 static void applylmrules(void);
 static void applyrules(Client *c);
@@ -228,6 +234,7 @@ static void setlayout(const Arg *arg);
 static void setmfact(const Arg *arg);
 static void setup(void);
 static void seturgent(Client *c, int urg);
+static int shouldgrabkey(Client *c, Key key);
 static void showhide(Client *c);
 static int solitary(Client *c);
 static void spawn(const Arg *arg);
@@ -1009,6 +1016,7 @@ focus(Client *c)
 		XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
 	}
 	selmon->sel = c;
+	grabkeys();
 	drawbars();
 }
 
@@ -1182,7 +1190,9 @@ grabkeys(void)
 		if (!syms)
 			return;
 		for (k = start; k <= end; k++)
-			for (i = 0; i < LENGTH(keys); i++)
+			for (i = 0; i < LENGTH(keys); i++) {
+				if (!shouldgrabkey(selmon->sel, keys[i]))
+					continue;
 				/* skip modifier codes, we do that ourselves */
 				if (keys[i].keysym == syms[(k - start) * skip])
 					for (j = 0; j < LENGTH(modifiers); j++)
@@ -1190,6 +1200,7 @@ grabkeys(void)
 							 keys[i].mod | modifiers[j],
 							 root, True,
 							 GrabModeAsync, GrabModeAsync);
+			}
 		XFree(syms);
 	}
 }
@@ -2000,6 +2011,27 @@ seturgent(Client *c, int urg)
 	wmh->flags = urg ? (wmh->flags | XUrgencyHint) : (wmh->flags & ~XUrgencyHint);
 	XSetWMHints(dpy, c->win, wmh);
 	XFree(wmh);
+}
+
+/* 0: should not bind, 1: should bind. */
+int
+shouldgrabkey(Client *c, Key key)
+{
+	unsigned int i;
+	const KeyRule *kr;
+
+	if (!c)
+		return 1;
+
+	for (i = 0; i < LENGTH(keyrules); i++) {
+		kr = &keyrules[i];
+		if ((kr->title && strstr(c->name, kr->title)) &&
+		    (kr->mod == AnyModifier || kr->mod == key.mod) &&
+		    (kr->keysym == AnyKey || kr->keysym == key.keysym))
+			return 0;
+	}
+
+	return 1;
 }
 
 void
