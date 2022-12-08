@@ -17,6 +17,7 @@ rely on compiler code elimination to do dead code removal.
 - destroyfocus ([patch](https://dwm.suckless.org/patches/destroyfocus/))
 - killunsel ([patch](https://dwm.suckless.org/patches/killunsel/))
 - layoutmonitorrules ([patch](https://dwm.suckless.org/patches/layoutmonitorrules/))
+- multikeycode ([merged into dwm itself](https://git.suckless.org/dwm/commit/89f9905714c1c1b2e8b09986dfbeca15b68d8af8.html))
 - noborderflicker ([patch](https://dwm.suckless.org/patches/noborderflicker/))
 - resetlayout ([patch](https://dwm.suckless.org/patches/resetlayout/))
 - ruleperiod (not upstreamed)
