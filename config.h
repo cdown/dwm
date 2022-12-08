@@ -44,6 +44,11 @@ static const Rule rules[] = {
 };
 static const int ruleperiod = 5; /* number of seconds before rules are ignored */
 
+static const KeyRule keyrules[] = {
+	/* title      modifier     keysym */
+	{ "QEMU",     AnyModifier, XK_F10 },
+};
+
 /* layout(s) */
 static const float mfact     = 0.5;  /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
