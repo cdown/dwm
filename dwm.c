@@ -68,6 +68,7 @@ enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
 enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
 enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
        ClkClientWin, ClkRootWin, ClkLast }; /* clicks */
+enum { ClientTags, ClientLast }; /* client atoms */
 
 typedef union {
 	int i;
@@ -298,7 +299,7 @@ static void (*handler[LASTEvent]) (XEvent *) = {
 	[PropertyNotify] = propertynotify,
 	[UnmapNotify] = unmapnotify
 };
-static Atom wmatom[WMLast], netatom[NetLast];
+static Atom wmatom[WMLast], netatom[NetLast], clientatom[ClientLast];
 static int running = 1;
 static Cur *cursor[CurLast];
 static Clr **scheme;
@@ -1324,6 +1325,10 @@ manage(Window w, XWindowAttributes *wa)
 	Client *c, *t = NULL;
 	Window trans = None;
 	XWindowChanges wc;
+	Atom atom;
+	int fmt;
+	unsigned long num, rem;
+	unsigned int *tags;
 
 	c = ecalloc(1, sizeof(Client));
 	c->win = w;
@@ -1338,6 +1343,11 @@ manage(Window w, XWindowAttributes *wa)
 	if (XGetTransientForHint(dpy, w, &trans) && (t = wintoclient(trans))) {
 		c->mon = t->mon;
 		c->tags = t->tags;
+	} else if (XGetWindowProperty(dpy, w, clientatom[ClientTags], 0, 1, False, XA_CARDINAL, &atom, &fmt, &num, &rem, (unsigned char **)&tags) == Success && num && *tags) {
+		/* TODO: stack order */
+		c->mon = selmon; /* TODO: store */
+		c->tags = *tags;
+		XFree(tags);
 	} else {
 		c->mon = selmon;
 		applyrules(c);
@@ -1972,6 +1982,7 @@ setup(void)
 	netatom[NetWMWindowType] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE", False);
 	netatom[NetWMWindowTypeDialog] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE_DIALOG", False);
 	netatom[NetClientList] = XInternAtom(dpy, "_NET_CLIENT_LIST", False);
+	clientatom[ClientTags] = XInternAtom(dpy, "_CLIENT_TAGS", False);
 	/* init cursors */
 	cursor[CurNormal] = drw_cur_create(drw, XC_left_ptr);
 	cursor[CurResize] = drw_cur_create(drw, XC_sizing);
@@ -2088,6 +2099,7 @@ tag(const Arg *arg)
 {
 	if (selmon->sel && arg->ui & TAGMASK) {
 		selmon->sel->tags = arg->ui & TAGMASK;
+		XChangeProperty(dpy, selmon->sel->win, clientatom[ClientTags], XA_CARDINAL, 32, PropModeReplace, (unsigned char *)&selmon->sel->tags, 1);
 		view(arg);
 	}
 }
