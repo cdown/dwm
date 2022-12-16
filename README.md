@@ -30,6 +30,7 @@ rely on compiler code elimination to do dead code removal.
 
 - bottomstack
 - column
+- fakefullscreen (with resize fix for chrome-based browsers + noborder fix)
 - gaplessgrid
 - keypressrelease
 - movestack
