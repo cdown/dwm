@@ -1657,8 +1657,8 @@ resizeclient(Client *c, int x, int y, int w, int h)
 	wc.border_width = c->bw;
 
 	if (solitary(c)) {
-		c->w = wc.width += c->bw * 2;
-		c->h = wc.height += c->bw * 2;
+		c->w = wc.width;
+		c->h = wc.height;
 		wc.border_width = 0;
 	}
 
