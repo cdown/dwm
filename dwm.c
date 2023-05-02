@@ -46,18 +46,18 @@
 #include "util.h"
 
 /* macros */
-#define BUTTONMASK              (ButtonPressMask|ButtonReleaseMask)
-#define CLEANMASK(mask)         (mask & ~(numlockmask|LockMask) & (ShiftMask|ControlMask|Mod1Mask|Mod2Mask|Mod3Mask|Mod4Mask|Mod5Mask))
+#define BUTTONMASK	      (ButtonPressMask|ButtonReleaseMask)
+#define CLEANMASK(mask)	 (mask & ~(numlockmask|LockMask) & (ShiftMask|ControlMask|Mod1Mask|Mod2Mask|Mod3Mask|Mod4Mask|Mod5Mask))
 #define INTERSECT(x,y,w,h,m)    (MAX(0, MIN((x)+(w),(m)->wx+(m)->ww) - MAX((x),(m)->wx)) \
-                               * MAX(0, MIN((y)+(h),(m)->wy+(m)->wh) - MAX((y),(m)->wy)))
+			       * MAX(0, MIN((y)+(h),(m)->wy+(m)->wh) - MAX((y),(m)->wy)))
 #define ISVISIBLEONTAG(C, T)    ((C->tags & T))
-#define ISVISIBLE(C)            ISVISIBLEONTAG(C, C->mon->tagset[C->mon->seltags])
-#define LENGTH(X)               (sizeof X / sizeof X[0])
-#define MOUSEMASK               (BUTTONMASK|PointerMotionMask)
-#define WIDTH(X)                ((X)->w + 2 * (X)->bw)
-#define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
-#define TAGMASK                 ((1 << LENGTH(tags)) - 1)
-#define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
+#define ISVISIBLE(C)	    ISVISIBLEONTAG(C, C->mon->tagset[C->mon->seltags])
+#define LENGTH(X)	       (sizeof X / sizeof X[0])
+#define MOUSEMASK	       (BUTTONMASK|PointerMotionMask)
+#define WIDTH(X)		((X)->w + 2 * (X)->bw)
+#define HEIGHT(X)	       ((X)->h + 2 * (X)->bw)
+#define TAGMASK		 ((1 << LENGTH(tags)) - 1)
+#define TEXTW(X)		(drw_fontset_getwidth(drw, (X)) + lrpad)
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
@@ -127,7 +127,7 @@ struct Monitor {
 	float mfact;
 	int nmaster;
 	int num;
-	int by;               /* bar geometry */
+	int by;	       /* bar geometry */
 	int mx, my, mw, mh;   /* screen size */
 	int wx, wy, ww, wh;   /* window area  */
 	unsigned int seltags;
@@ -276,9 +276,9 @@ static Client *prevzoom = NULL;
 static const char broken[] = "broken";
 static char stext[256];
 static int screen;
-static int sw, sh;           /* X display screen geometry width, height */
-static int bh;               /* bar height */
-static int lrpad;            /* sum of left and right padding for text */
+static int sw, sh;	   /* X display screen geometry width, height */
+static int bh;	       /* bar height */
+static int lrpad;	    /* sum of left and right padding for text */
 static int (*xerrorxlib)(Display *, XErrorEvent *);
 static unsigned int numlockmask = 0;
 static void (*handler[LASTEvent]) (XEvent *) = {
@@ -685,20 +685,20 @@ clientmessage(XEvent *e)
 
 void
 col(Monitor *m) {
-	unsigned int i, n, h, w, x, y,mw;
+	unsigned int i, n, h, w, x, y, mw;
 	Client *c;
 
 	for(n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
 	if(n == 0)
 		return;
-        if(n > m->nmaster)
-                mw = m->nmaster ? m->ww * m->mfact : 0;
-        else
-                mw = m->ww;
+	if(n > m->nmaster)
+		mw = m->nmaster ? m->ww * m->mfact : 0;
+	else
+		mw = m->ww;
 	for(i = x = y = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
 		if(i < m->nmaster) {
-			 w = (mw - x) / (MIN(n, m->nmaster)-i);
-                         resize(c, x + m->wx, m->wy, w - (2*c->bw), m->wh - (2*c->bw), False);
+			w = (mw - x) / (MIN(n, m->nmaster)-i);
+			resize(c, x + m->wx, m->wy, w - (2*c->bw), m->wh - (2*c->bw), False);
 			x += WIDTH(c);
 		}
 		else {
