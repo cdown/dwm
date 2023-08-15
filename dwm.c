@@ -327,33 +327,36 @@ void
 applylmrules(void)
 {
 	size_t t;
+	Monitor *m;
 
-	for (t = 0; t <= LENGTH(tags); t++) {
-		float new_mfact = mfact;
-		int new_nmaster = nmaster;
-		size_t i;
+	for (m = mons; m; m = m->next) {
+		for (t = 0; t <= LENGTH(tags); t++) {
+			float new_mfact = mfact;
+			int new_nmaster = nmaster;
+			size_t i;
 
-		for (i = 0; i < LENGTH(lm_rules); i++) {
-			const LayoutMonitorRule *lmr = &lm_rules[i];
+			for (i = 0; i < LENGTH(lm_rules); i++) {
+				const LayoutMonitorRule *lmr = &lm_rules[i];
 
-			if (selmon->mw >= lmr->mw &&
-			    selmon->mh >= lmr->mh &&
-			    selmon->lt[selmon->pertag->sellts[t]] == &layouts[lmr->layout])
-			{
-				new_mfact = lmr->mfact;
-				new_nmaster = lmr->nmaster;
-				break;
+				if (m->mw >= lmr->mw &&
+				    m->mh >= lmr->mh &&
+				    m->lt[m->pertag->sellts[t]] == &layouts[lmr->layout])
+				{
+					new_mfact = lmr->mfact;
+					new_nmaster = lmr->nmaster;
+					break;
+				}
 			}
+
+			m->pertag->mfacts[t] = new_mfact;
+			m->pertag->nmasters[t] = new_nmaster;
+
 		}
 
-		selmon->pertag->mfacts[t] = new_mfact;
-		selmon->pertag->nmasters[t] = new_nmaster;
-
+		m->mfact = m->pertag->mfacts[m->pertag->curtag];
+		m->nmaster = m->pertag->nmasters[m->pertag->curtag];
+		arrange(m);
 	}
-
-	selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag];
-	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag];
-	arrange(selmon);
 }
 
 void
