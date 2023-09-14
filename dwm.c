@@ -236,7 +236,7 @@ static void setlayout(const Arg *arg);
 static void setmfact(const Arg *arg);
 static void setup(void);
 static void seturgent(Client *c, int urg);
-static int shouldgrabkey(Client *c, Key *key);
+static int shouldgrabkey(Client *c, Key key);
 static void showhide(Client *c);
 static int solitary(Client *c);
 static void spawn(const Arg *arg);
@@ -1017,9 +1017,7 @@ focus(Client *c)
 		XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
 	}
 	selmon->sel = c;
-	/* only needed if we just moved to a window with an ungrab rule */
-	if (!shouldgrabkey(c, NULL))
-		grabkeys();
+	grabkeys();
 	drawbars();
 }
 
@@ -1194,7 +1192,7 @@ grabkeys(void)
 			return;
 		for (k = start; k <= end; k++)
 			for (i = 0; i < LENGTH(keys); i++) {
-				if (!shouldgrabkey(selmon->sel, &keys[i]))
+				if (!shouldgrabkey(selmon->sel, keys[i]))
 					continue;
 				/* skip modifier codes, we do that ourselves */
 				if (keys[i].keysym == syms[(k - start) * skip])
@@ -2005,7 +2003,7 @@ seturgent(Client *c, int urg)
 
 /* 0: should not bind, 1: should bind. */
 int
-shouldgrabkey(Client *c, Key *key)
+shouldgrabkey(Client *c, Key key)
 {
 	unsigned int i;
 	const KeyRule *kr;
@@ -2016,9 +2014,8 @@ shouldgrabkey(Client *c, Key *key)
 	for (i = 0; i < LENGTH(keyrules); i++) {
 		kr = &keyrules[i];
 		if ((kr->title && strstr(c->name, kr->title)) &&
-		    (!key ||
-			((kr->mod == AnyModifier || kr->mod == key->mod) &&
-			 (kr->keysym == AnyKey || kr->keysym == key->keysym))))
+		    (kr->mod == AnyModifier || kr->mod == key.mod) &&
+		    (kr->keysym == AnyKey || kr->keysym == key.keysym))
 			return 0;
 	}
 
